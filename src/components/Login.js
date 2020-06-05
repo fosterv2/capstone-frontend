@@ -8,7 +8,8 @@ const EMPTYFIELDS = {
 
 class Login extends Component {
     state = {
-        fields: EMPTYFIELDS
+        fields: EMPTYFIELDS,
+        error: false
     }
 
     handleChange = event => {
@@ -30,13 +31,13 @@ class Login extends Component {
             })
         })
         .then(resp => resp.json())
-        .then(user => {console.log(user)
-            // if (!user.error) {
-            //     this.props.onLogin(user)
-            //     this.props.history.push('/')
-            // } else {
-            //     this.setState({ error: true })
-            // }
+        .then(user => {
+            if (!user.error) {
+                this.props.onLogin(user)
+                this.props.history.push('/')
+            } else {
+                this.setState({ error: true })
+            }
         })
         this.setState({ fields: EMPTYFIELDS })
     }
@@ -45,6 +46,7 @@ class Login extends Component {
         const { username, password } = this.state.fields
         return (
             <div>
+                {this.state.error ? <h1>Wrong inputs</h1> : null}
                 <form onSubmit={this.handleSubmit}>
                     <div className="ui field">
                         <label>Username</label><br/>

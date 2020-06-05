@@ -19,7 +19,7 @@ const PostCard = props => {
                 <p>{postInfo.content}</p>
             </div>
             <div className="post buttons">
-                <p>{postInfo.likes} Likes <span onClick={console.log("Liked")}>+</span></p>
+                <p>{postInfo.likes} Likes <span onClick={() => console.log("Liked")}>+</span></p>
                 <p><Link to={`/posts/${postInfo.id}`}>Comment</Link></p>
             </div>
         </div>

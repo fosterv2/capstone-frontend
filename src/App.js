@@ -13,11 +13,25 @@ class App extends Component {
   state = {
     posts: [],
     currentUser: {},
-    loggedIn: false,
+    loggedIn: !!localStorage.getItem("token"),
   }
 
   componentDidMount() {
     this.fetchPosts()
+    const token = localStorage.getItem("token")
+    if (token) {
+      fetch("http://localhost:3000/auth", {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: token
+        }
+      })
+      .then(resp => resp.json())
+      .then(user => {
+        this.setState({ currentUser: user.user })
+      })
+    }
   }
 
   fetchPosts = () => {
@@ -25,6 +39,8 @@ class App extends Component {
     .then(resp => resp.json())
     .then(posts => this.setState({ posts }))
   }
+
+
 
   onLogin = response => {
     localStorage.setItem("token", response.jwt)
