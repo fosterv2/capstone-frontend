@@ -17,9 +17,21 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.fetchPosts()
+  }
+
+  fetchPosts = () => {
     fetch("http://localhost:3000/posts")
     .then(resp => resp.json())
     .then(posts => this.setState({ posts }))
+  }
+
+  onLogin = response => {
+    localStorage.setItem("token", response.jwt)
+    this.setState({
+      currentUser: response.user,
+      loggedIn: true
+    })
   }
 
   render() {
@@ -28,8 +40,8 @@ class App extends Component {
         <Navbar loggedIn={this.state.loggedIn} />
         <div>
           <Route exact path="/" render={props => <Home {...props} posts={this.state.posts} />} />
-          <Route exact path="/login" render={props => <Login {...props} />} />
-          <Route exact path="/signup" render={props => <Signup {...props} />} />
+          <Route exact path="/login" render={props => <Login {...props} onLogin={this.onLogin} />} />
+          <Route exact path="/signup" render={props => <Signup {...props} onLogin={this.onLogin} />} />
           <Route exact path="/about" render={props => <About {...props} />} />
           <Route exact path="/posts/:post_id" render={props => <Post {...props} posts={this.state.posts} />} />
         </div>

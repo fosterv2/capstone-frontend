@@ -1,8 +1,78 @@
 import React, { Component } from 'react';
 
+const URL = "http://localhost:3000/auth"
+const EMPTYFIELDS = {
+    username: "",
+    password: ""
+}
+
 class Login extends Component {
+    state = {
+        fields: EMPTYFIELDS
+    }
+
+    handleChange = event => {
+        const newFields = {...this.state.fields, [event.target.name]: event.target.value}
+        this.setState({ fields: newFields })
+    }
+
+    handleSubmit = event => {
+        event.preventDefault()
+        fetch(URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify({
+                username: this.state.fields.username,
+                password: this.state.fields.password
+            })
+        })
+        .then(resp => resp.json())
+        .then(user => {console.log(user)
+            // if (!user.error) {
+            //     this.props.onLogin(user)
+            //     this.props.history.push('/')
+            // } else {
+            //     this.setState({ error: true })
+            // }
+        })
+        this.setState({ fields: EMPTYFIELDS })
+    }
+
     render() {
-        return <div>This is Login</div>
+        const { username, password } = this.state.fields
+        return (
+            <div>
+                <form onSubmit={this.handleSubmit}>
+                    <div className="ui field">
+                        <label>Username</label><br/>
+                        <input
+                            name="username"
+                            placeholder="Enter username"
+                            value={username}
+                            onChange={this.handleChange}
+                        />
+                    </div>
+                    <div className="ui field">
+                        <label>Password</label><br/>
+                        <input
+                            name="password"
+                            type="password"
+                            placeholder="Enter password"
+                            value={password}
+                            onChange={this.handleChange}
+                        />
+                    </div>
+                    <div className="form button">
+                        <button type="submit">
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>
+        )
     }
 }
 
