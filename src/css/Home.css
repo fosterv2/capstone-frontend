@@ -18,7 +18,8 @@
     border-radius: 5px;
     /* padding: 10px; */
     margin: 10px;
-    background-color: lightblue;
+    background-color: black;
+    color: white
 }
 
 .post.card img {
@@ -30,6 +31,7 @@
     display: flex;
     justify-content: space-around;
     background-color: white;
+    color: black;
     border-bottom: 2px solid gray;
 }
 
@@ -39,4 +41,11 @@
     padding: 10px;
 }
 
+.post.buttons a {
+    color: black;
+    text-decoration: none;
+}
 
+.post.buttons a:hover {
+    color: gray;
+}

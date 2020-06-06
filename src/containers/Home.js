@@ -1,18 +1,12 @@
 import React, { Component } from 'react'
 import PostCard from '../components/PostCard'
-// import Post from '../containers/Post'
-// import { Route } from 'react-router-dom';
+import Profile from './Profile'
+import GroupList from './GroupList'
 import '../css/Home.css'
 
 class Home extends Component {
-    state = {
-        posts: []
-    }
-
-    // componentDidMount() {
-    //     fetch("http://localhost:3000/posts")
-    //     .then(resp => resp.json())
-    //     .then(posts => this.setState({ posts }))
+    // state = {
+    //     posts: []
     // }
 
     renderPosts = () => {
@@ -20,12 +14,16 @@ class Home extends Component {
     }
 
     render() {
+        const { user, history, loggedIn } = this.props
         return (
             <div className="home">
-                <div className="profile">Profile</div>
+                <div className="profile">
+                    {loggedIn ? <Profile user={user} history={history} /> : null}
+                </div>
                 <div className="posts">{this.renderPosts()}</div>
-                <div className="groups">Groups</div>
-                {/* <Route exact path="/posts/:id" render={props => <Post {...props} posts={this.state.posts} />} /> */}
+                <div className="groups">
+                    {loggedIn ? <GroupList /> : null}
+                </div>
             </div>
         )
     }

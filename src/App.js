@@ -8,6 +8,7 @@ import Signup from './components/Signup'
 import Navbar from './components/Navbar'
 import About from './components/About'
 import Post from './containers/Post'
+import ProfileForm from './components/ProfileForm'
 
 class App extends Component {
   state = {
@@ -40,8 +41,6 @@ class App extends Component {
     .then(posts => this.setState({ posts }))
   }
 
-
-
   onLogin = response => {
     localStorage.setItem("token", response.jwt)
     this.setState({
@@ -50,16 +49,22 @@ class App extends Component {
     })
   }
 
+  handleUpdateUser = event => {
+    event.preventDefault()
+  }
+
   render() {
+    const { loggedIn, posts, currentUser } = this.state
     return (
       <Router>
-        <Navbar loggedIn={this.state.loggedIn} />
+        <Navbar loggedIn={loggedIn} />
         <div>
-          <Route exact path="/" render={props => <Home {...props} posts={this.state.posts} />} />
+          <Route exact path="/" render={props => <Home {...props} posts={posts} user={currentUser} loggedIn={loggedIn} />} />
           <Route exact path="/login" render={props => <Login {...props} onLogin={this.onLogin} />} />
           <Route exact path="/signup" render={props => <Signup {...props} onLogin={this.onLogin} />} />
-          <Route exact path="/about" render={props => <About {...props} />} />
-          <Route exact path="/posts/:post_id" render={props => <Post {...props} posts={this.state.posts} />} />
+          <Route exact path="/about" component={About} />
+          <Route exact path="/posts/:post_id" render={props => <Post {...props} posts={posts} />} />
+          <Route exact path="/update_user" render={props => <ProfileForm {...props} handleUpdateProfile={this.handleUpdateUser} />} />
         </div>
       </Router>
     )

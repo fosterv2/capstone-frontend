@@ -1,0 +1,10 @@
+.profile.card {
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+.profile.card img {
+    max-width: 80%;
+    border-radius: 50%;
+}

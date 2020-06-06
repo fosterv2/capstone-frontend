@@ -11,8 +11,8 @@ const PostCard = props => {
     return (
         <div className="post card">
             <div className="heading">
-                <p>Posted By: {postInfo.user.username}</p>
-                <p>Posted On: {parseDate(postInfo.created_at)}</p>
+                <p><strong>Posted By:</strong> {postInfo.user.username}</p>
+                <p><strong>Posted On:</strong> {parseDate(postInfo.created_at)}</p>
             </div>
             {postInfo.post_img ? <img src={postInfo.post_img} alt="cat" /> : null}
             <div className="content">
