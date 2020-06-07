@@ -10,7 +10,9 @@ class Home extends Component {
     // }
 
     renderPosts = () => {
-        return this.props.posts.map(post => <PostCard key={post.id} postInfo={post} />)
+        const orderPosts = this.props.posts
+        orderPosts.reverse()
+        return orderPosts.map(post => <PostCard key={post.id} postInfo={post} />)
     }
 
     render() {

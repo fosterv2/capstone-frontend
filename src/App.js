@@ -8,7 +8,7 @@ import Signup from './components/Signup'
 import Navbar from './components/Navbar'
 import About from './components/About'
 import Post from './containers/Post'
-import ProfileForm from './components/ProfileForm'
+import ProfileForm from './forms/ProfileForm'
 
 class App extends Component {
   state = {
@@ -49,6 +49,14 @@ class App extends Component {
     })
   }
 
+  onSignOut = () => {
+    localStorage.removeItem("token")
+    this.setState({
+      loggedIn: false,
+      currentUser: {}
+    })
+  }
+
   handleUpdateUser = event => {
     event.preventDefault()
   }
@@ -57,7 +65,7 @@ class App extends Component {
     const { loggedIn, posts, currentUser } = this.state
     return (
       <Router>
-        <Navbar loggedIn={loggedIn} />
+        <Navbar loggedIn={loggedIn} signOut={this.onSignOut} />
         <div>
           <Route exact path="/" render={props => <Home {...props} posts={posts} user={currentUser} loggedIn={loggedIn} />} />
           <Route exact path="/login" render={props => <Login {...props} onLogin={this.onLogin} />} />

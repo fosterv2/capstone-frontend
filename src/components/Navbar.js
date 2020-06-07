@@ -1,13 +1,16 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ loggedIn, signOut }) => {
     return(
         <div className="navbar">
-            {/* <img src="" width="" height="" alt="cat-logo" /> */}
-            <div><NavLink to="/" exact>Home</NavLink></div>
-            <div><NavLink to="/login">Login</NavLink></div>
+            {/* <div><img src="" width="" height="" alt="cat-logo" /></div> */}
             <div><NavLink to="/about">About</NavLink></div>
+            <div><NavLink to="/" exact>Home</NavLink></div>
+            <div>{loggedIn ?
+            <NavLink to="/login" exact onClick={signOut}>Sign Out</NavLink>
+            : <NavLink to="/login">Login</NavLink>
+            }</div>
         </div>
     )
 }

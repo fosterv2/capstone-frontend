@@ -1,26 +1,34 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const PostCard = props => {
+const PostCard = ({ postInfo }) => {
+    const { user, created_at, post_img, content, id, likes } = postInfo
+
     const parseDate = date => {
         const dateArr = date.split("-")
         return `${dateArr[1]}/${parseInt(dateArr[2])}/${dateArr[0]}`
     }
 
-    const { postInfo } = props
+    const isPicture = () => {
+        if (post_img) {
+            const format = post_img.split(".").pop()
+            return format === "gif" || format === "jpg" || format === "png"
+        }
+    }
+
     return (
         <div className="post card">
             <div className="heading">
-                <p><strong>Posted By:</strong> {postInfo.user.username}</p>
-                <p><strong>Posted On:</strong> {parseDate(postInfo.created_at)}</p>
+                <p><strong>Posted By:</strong> {user.username}</p>
+                <p><strong>Posted On:</strong> {parseDate(created_at)}</p>
             </div>
-            {postInfo.post_img ? <img src={postInfo.post_img} alt="cat" /> : null}
+            {isPicture() ? <img src={post_img} alt="cat" /> : null}
             <div className="content">
-                <p>{postInfo.content}</p>
+                <p>{content}</p>
             </div>
             <div className="post buttons">
-                <p>{postInfo.likes} Likes <span onClick={() => console.log("Liked")}>+</span></p>
-                <p><Link to={`/posts/${postInfo.id}`}>Comment</Link></p>
+                <p>{likes} Likes <span onClick={() => console.log("Liked")}>+</span></p>
+                <p><Link to={`/posts/${id}`}>Comment</Link></p>
             </div>
         </div>
     )

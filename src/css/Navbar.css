@@ -21,11 +21,13 @@
 } */
 
 .navbar {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    /* display: grid;
+    grid-template-columns: 1fr 1fr 1fr; */
+    display: flex;
+    justify-content: space-around;
     text-align: center;
     height: 43px;
-    background-color: blue;
+    background-color: #007bff;
     padding-top: 20px;
     font-size: 17px;
     margin-bottom: 20px;
