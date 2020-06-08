@@ -71,8 +71,8 @@ class App extends Component {
           <Route exact path="/login" render={props => <Login {...props} onLogin={this.onLogin} />} />
           <Route exact path="/signup" render={props => <Signup {...props} onLogin={this.onLogin} />} />
           <Route exact path="/about" component={About} />
-          <Route exact path="/posts/:post_id" render={props => <Post {...props} posts={posts} />} />
-          <Route exact path="/update_user" render={props => <ProfileForm {...props} handleUpdateProfile={this.handleUpdateUser} />} />
+          <Route exact path="/posts/:post_id" render={props => <Post {...props} />} />
+          <Route exact path="/update_user" render={props => <ProfileForm {...props} user={this.state.currentUser} handleUpdateProfile={this.handleUpdateUser} />} />
         </div>
       </Router>
     )

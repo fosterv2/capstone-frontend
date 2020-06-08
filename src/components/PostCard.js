@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const PostCard = ({ postInfo }) => {
-    const { user, created_at, post_img, content, id, likes } = postInfo
+const PostCard = props => {
+    const { user, created_at, post_img, content, id, likes } = props.postInfo
 
     const parseDate = date => {
         const dateArr = date.split("-")
@@ -28,7 +28,11 @@ const PostCard = ({ postInfo }) => {
             </div>
             <div className="post buttons">
                 <p>{likes} Likes <span onClick={() => console.log("Liked")}>+</span></p>
-                <p><Link to={`/posts/${id}`}>Comment</Link></p>
+                <p>{
+                    props.onHandleClick ? 
+                    <span onClick={props.onHandleClick}>Add Comment</span>
+                    : <Link to={`/posts/${id}`}>Comments</Link>
+                }</p>
             </div>
         </div>
     )
