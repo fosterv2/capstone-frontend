@@ -83,7 +83,7 @@ class ProfileForm extends Component {
         return (
             <div className="ui form">
                 <h1>Your User Profile</h1>
-                <form onSubmit={() => console.log("Hi")}>
+                <form onSubmit={this.handleSubmit}>
                     <div className="ui field">
                         <label>Username</label><br/>
                         <input

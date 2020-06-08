@@ -11,7 +11,8 @@ const EMPTYFIELDS = {
 
 class Signup extends Component {
     state = {
-        fields: EMPTYFIELDS
+        fields: EMPTYFIELDS,
+        error: false
     }
 
     handleChange = event => {
@@ -31,12 +32,12 @@ class Signup extends Component {
         })
         .then(resp => resp.json())
         .then(user => {console.log(user)
-            // if (!user.error) {
-            //     this.props.onLogin(user)
-            //     this.props.history.push('/')
-            // } else {
-            //     this.setState({ error: true })
-            // }
+            if (!user.error) {
+                this.props.onLogin(user)
+                this.props.history.push('/')
+            } else {
+                this.setState({ error: true })
+            }
         })
         .catch()
         this.setState({ fields: EMPTYFIELDS })
@@ -110,12 +111,12 @@ class Signup extends Component {
                         </button>
                     </div>
                 </form>
-                {/* <div className="toggle button">
+                <div className="toggle button">
                     <h2>or</h2>
                     <button type="submit" onClick={() => this.props.history.push("/login")}>
                         Login
                     </button>
-                </div> */}
+                </div>
             </div>
         )
     }    

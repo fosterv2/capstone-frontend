@@ -73,6 +73,12 @@ class Login extends Component {
                         </button>
                     </div>
                 </form>
+                <div className="toggle button">
+                    <h2>or</h2>
+                    <button type="submit" onClick={() => this.props.history.push("/signup")}>
+                        Sign Up
+                    </button>
+                </div>
             </div>
         )
     }

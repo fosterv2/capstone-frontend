@@ -72,18 +72,82 @@ class App extends Component {
     })
   }
 
+  handlePostSubmit = event => {
+    // console.log(event.target.content.value)
+    // console.log(event.target.img_url.value)
+    const body = {
+      content: event.target.content.value,
+      post_img: event.target.img_url.value,
+      user_id: this.state.currentUser.id,
+      group_id: 2
+    }
+    fetch("http://localhost:3000/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify(body)
+    })
+    .then(resp => resp.json())
+    .then(post => this.setState(prev => {
+      return { posts: [...prev.posts, post] }
+    }))
+  }
+  
+  // handleCommentSubmit = (content, id) => {
+  //   // console.log(content, id)
+  //   const body = {
+  //     content: event.target.content.value,
+  //     post_img: event.target.img_url.value,
+  //     user_id: this.state.currentUser.id,
+  //     group_id: 2
+  //   }
+  //   fetch("http://localhost:3000/comments", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json"
+  //     },
+  //     body: JSON.stringify(body)
+  //   })
+  //   .then(resp => resp.json())
+  //   .then(post => this.setState(prev => {
+  //     return { posts: [...prev.posts, post] }
+  //   }))
+  // }
+
   render() {
     const { loggedIn, posts, currentUser } = this.state
     return (
       <Router>
         <Navbar loggedIn={loggedIn} signOut={this.onSignOut} />
         <div>
-          <Route exact path="/" render={props => <Home {...props} posts={posts} user={currentUser} loggedIn={loggedIn} />} />
+          <Route exact path="/"
+            render={props => <Home
+              {...props}
+              posts={posts}
+              user={currentUser}
+              loggedIn={loggedIn}
+              handleSubmit={this.handlePostSubmit}
+            />}
+          />
           <Route exact path="/login" render={props => <Login {...props} onLogin={this.onLogin} />} />
           <Route exact path="/signup" render={props => <Signup {...props} onLogin={this.onLogin} />} />
           <Route exact path="/about" component={About} />
-          <Route exact path="/posts/:post_id" render={props => <Post {...props} />} />
-          <Route exact path="/update_user" render={props => <ProfileForm {...props} user={this.state.currentUser} handleUpdateProfile={this.handleUpdateUser} />} />
+          <Route exact path="/posts/:post_id"
+            render={props => <Post
+              {...props}
+              user={this.state.currentUser}
+            />}
+          />
+          <Route exact path="/update_user"
+            render={props => <ProfileForm
+              {...props}
+              user={this.state.currentUser}
+              handleUpdateProfile={this.handleUpdateUser}
+            />}
+          />
         </div>
       </Router>
     )
