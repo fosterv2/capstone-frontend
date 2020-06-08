@@ -57,8 +57,19 @@ class App extends Component {
     })
   }
 
-  handleUpdateUser = event => {
-    event.preventDefault()
+  handleUpdateUser = userInfo => {
+    fetch(`http://localhost:3000/users/${userInfo.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify(userInfo)
+    })
+    .then(resp => resp.json())
+    .then(user => {
+      this.setState({ currentUser: user })
+    })
   }
 
   render() {

@@ -71,6 +71,12 @@ class ProfileForm extends Component {
         const newFields = { ...this.state.fields, [event.target.name]: event.target.value }
         this.setState({ fields: newFields })
     }
+
+    handleSubmit = event => {
+        event.preventDefault()
+        this.props.handleUpdateProfile(this.state.fields)
+        this.props.history.push("/")
+    }
     
     render() {
         const { username, breed, owner_name, img_url } = this.state.fields
