@@ -166,7 +166,7 @@ class App extends Component {
               handleUpdateProfile={this.handleUpdateUser}
             />}
           />
-          <Route exact path="/groups/:group_id" render={props => <Group {...props} />} />
+          <Route exact path="/groups/:group_id" render={props => <Group {...props} handleLike={this.handleLike} />} />
         </div>
       </Router>
     )

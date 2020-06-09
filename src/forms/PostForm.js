@@ -14,6 +14,7 @@ const PostForm = ({ handleSubmit }) => {
 
     return (
         <div>
+            {/* Add group? or put in group page? */}
             <form onSubmit={handleSubmit}>
                 <textarea
                     name="content"
