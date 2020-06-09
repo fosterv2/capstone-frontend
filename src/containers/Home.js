@@ -3,16 +3,45 @@ import PostCard from '../components/PostCard'
 import Profile from './Profile'
 import GroupList from './GroupList'
 import PostForm from '../forms/PostForm'
+import { fetchLike } from '../services/FormHook'
 import '../css/Home.css'
 
 class Home extends Component {
     state = {
+        posts: [],
         addClicked: false
     }
 
+    componentDidMount() {
+        fetch("http://localhost:3000/posts")
+        .then(resp => resp.json())
+        .then(posts => {
+            posts.sort((a, b) => {
+                if (a.created_at > b.created_at) {
+                    return -1
+                } else if (a.created_at < b.created_at) {
+                    return 1
+                } else {
+                    return 0
+                }
+            })
+            this.setState({ posts })
+        })
+    }
+
+    handleLike = (id, likes) => {
+        fetchLike(id, likes)
+        .then(postReturn => {
+            this.setState(prev => {
+                return { posts: prev.posts.map(post => post.id === id ? postReturn : post) }
+            })
+        })
+    }
+
     renderPosts = () => {
-        const { posts, handleLike } = this.props
-        return posts.map(post => <PostCard key={post.id} handleClickLike={handleLike} postInfo={post} />)
+        return this.state.posts.map(post => {
+            return <PostCard key={post.id} handleClickLike={this.handleLike} postInfo={post} />
+        })
     }
 
     userGroups = () => {
@@ -45,7 +74,7 @@ class Home extends Component {
                     {this.renderPosts()}
                 </div>
                 <div className="groups">
-                    {user.id ? <GroupList groups={this.userGroups()} /> : null}
+                    {user.id ? <GroupList groups={this.userGroups()} history={history} /> : null}
                 </div>
             </div>
         )

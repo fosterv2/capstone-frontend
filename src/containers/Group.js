@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PostCard from '../components/PostCard'
+import { fetchLike } from '../services/FormHook'
 
 class Group extends Component {
     state = {
@@ -21,13 +22,22 @@ class Group extends Component {
         .then(posts => this.setState({ posts }))
     }
 
+    handleLike = (id, likes) => {
+        fetchLike(id, likes)
+        .then(postReturn => {
+            this.setState(prev => {
+                return { posts: prev.posts.map(post => post.id === id ? postReturn : post) }
+            })
+        })
+    }
+
     listUsers = () => {
         return this.state.group.users.map(user => <li key={user.id}>{user.username}</li>)
     }
 
     renderPosts = () => {
         return this.state.posts.map(post => {
-            return <PostCard key={post.id} handleClickLike={this.props.handleLike} postInfo={post} />
+            return <PostCard key={post.id} handleClickLike={this.handleLike} postInfo={post} />
         })
     }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const GroupList = ({ groups }) => {
+const GroupList = ({ groups, history }) => {
     const renderGroups = () => {
         return groups.map(group => <li key={group.id}><Link to={`/groups/${group.id}`}>{group.name}</Link></li>)
     }
@@ -10,7 +10,7 @@ const GroupList = ({ groups }) => {
         <div>
             <h3>Your Groups</h3>
             <ul>{renderGroups()}</ul>
-            <p>Seach more groups</p>
+            <button onClick={() => history.push('/groups')}>Seach more groups</button>
         </div>
     )
 }

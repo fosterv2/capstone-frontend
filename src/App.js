@@ -10,17 +10,18 @@ import About from './components/About'
 import Post from './containers/Post'
 import ProfileForm from './forms/ProfileForm'
 import Group from './containers/Group'
+import AllGroups from './containers/AllGroups'
 
 class App extends Component {
   state = {
-    posts: [],
+    // posts: [],
     currentUser: {},
     loggedIn: !!localStorage.getItem("token"),
     groups: []
   }
 
   componentDidMount() {
-    this.fetchPosts()
+    // this.fetchPosts()
     this.fetchGroups()
     const token = localStorage.getItem("token")
     if (token) {
@@ -38,22 +39,22 @@ class App extends Component {
     }
   }
 
-  fetchPosts = () => {
-    fetch("http://localhost:3000/posts")
-    .then(resp => resp.json())
-    .then(posts => {
-      posts.sort((a, b) => {
-        if (a.created_at > b.created_at) {
-          return -1
-        } else if (a.created_at < b.created_at) {
-          return 1
-        } else {
-          return 0
-        }
-      })
-      this.setState({ posts })
-    })
-  }
+  // fetchPosts = () => {
+  //   fetch("http://localhost:3000/posts")
+  //   .then(resp => resp.json())
+  //   .then(posts => {
+  //     posts.sort((a, b) => {
+  //       if (a.created_at > b.created_at) {
+  //         return -1
+  //       } else if (a.created_at < b.created_at) {
+  //         return 1
+  //       } else {
+  //         return 0
+  //       }
+  //     })
+  //     this.setState({ posts })
+  //   })
+  // }
 
   fetchGroups = () => {
     fetch("http://localhost:3000/groups")
@@ -133,7 +134,7 @@ class App extends Component {
   }
 
   render() {
-    const { loggedIn, posts, currentUser, groups } = this.state
+    const { loggedIn, currentUser, groups } = this.state
     return (
       <Router>
         <Navbar loggedIn={loggedIn} signOut={this.onSignOut} />
@@ -141,11 +142,10 @@ class App extends Component {
           <Route exact path="/"
             render={props => <Home
               {...props}
-              posts={posts}
+              // posts={posts}
               user={currentUser}
               loggedIn={loggedIn}
               handleSubmit={this.handlePostSubmit}
-              handleLike={this.handleLike}
               groups={groups}
             />}
           />
@@ -156,7 +156,6 @@ class App extends Component {
             render={props => <Post
               {...props}
               user={this.state.currentUser}
-              handleLike={this.handleLike}
             />}
           />
           <Route exact path="/update_user"
@@ -166,7 +165,8 @@ class App extends Component {
               handleUpdateProfile={this.handleUpdateUser}
             />}
           />
-          <Route exact path="/groups/:group_id" render={props => <Group {...props} handleLike={this.handleLike} />} />
+          <Route exact path="/groups" render={props => <AllGroups {...props} groups={groups} />} />
+          <Route exact path="/groups/:group_id" render={props => <Group {...props} />} />
         </div>
       </Router>
     )

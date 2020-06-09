@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PostCard from '../components/PostCard'
 import CommentCard from '../components/CommentCard'
 import CommentForm from '../forms/CommentForm'
+import { fetchLike } from '../services/FormHook'
 import '../css/Post.css'
 
 class Post extends Component {
@@ -28,6 +29,14 @@ class Post extends Component {
                 }
             })
             this.setState({ comments })
+        })
+    }
+
+    handleLike = (id, likes) => {
+        // console.log(id, likes)
+        fetchLike(id, likes)
+        .then(postReturn => {
+            this.setState({ post: postReturn })
         })
     }
 
@@ -68,7 +77,7 @@ class Post extends Component {
             <div className="posting">
                 {/* Add a user bio for using following */}
                 {this.state.post.id ?
-                <PostCard postInfo={this.state.post} handleClickLike={this.props.handleLike} onHandleClick={this.handleClick} />
+                <PostCard postInfo={this.state.post} handleClickLike={this.handleLike} onHandleClick={this.handleClick} />
                 : null}
                 {this.state.addClicked ? 
                 <CommentForm handleSubmit={this.handleSubmit} />

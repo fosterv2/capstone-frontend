@@ -10,3 +10,22 @@ export function useFormInput(initialState) {
         onChange: handleChange
     }
 }
+
+export function fetchLike(id, likes) {
+    return fetch(`http://localhost:3000/posts/${id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify({
+            likes: likes + 1
+        })
+    })
+    .then(resp => resp.json())
+    // .then(postReturn => {
+    //     this.setState(prev => {
+    //         return { posts: prev.posts.map(post => post.id === id ? postReturn : post) }
+    //     })
+    // })
+}
