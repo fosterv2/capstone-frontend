@@ -27,7 +27,7 @@ const PostCard = props => {
                 <p>{content}</p>
             </div>
             <div className="post buttons">
-                <p>{likes} Likes <span onClick={() => console.log("Liked")}>+</span></p>
+                <p>{likes} Likes <span onClick={() => props.handleClickLike(id, likes)}>+</span></p>
                 <p>{
                     props.onHandleClick ? 
                     <span onClick={props.onHandleClick}>Add Comment</span>

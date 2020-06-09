@@ -11,9 +11,12 @@ class Home extends Component {
     }
 
     renderPosts = () => {
-        const orderPosts = this.props.posts
-        orderPosts.reverse()
-        return orderPosts.map(post => <PostCard key={post.id} postInfo={post} />)
+        const { posts, handleLike } = this.props
+        return posts.map(post => <PostCard key={post.id} handleClickLike={handleLike} postInfo={post} />)
+    }
+
+    userGroups = () => {
+        return this.props.groups.filter(group => !!group.users.find(user => user.id === this.props.user.id))
     }
 
     handleClick = () => {
@@ -42,7 +45,7 @@ class Home extends Component {
                     {this.renderPosts()}
                 </div>
                 <div className="groups">
-                    {loggedIn ? <GroupList /> : null}
+                    {user.id ? <GroupList groups={this.userGroups()} /> : null}
                 </div>
             </div>
         )

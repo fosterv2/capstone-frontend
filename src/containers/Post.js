@@ -17,7 +17,18 @@ class Post extends Component {
         .then(post => this.setState({ post }))
         fetch(`http://localhost:3000/comments/${this.props.match.params.post_id}`)
         .then(resp => resp.json())
-        .then(comments => this.setState({ comments: comments.reverse() }))
+        .then(comments => {
+            comments.sort((a, b) => {
+                if (a.created_at > b.created_at) {
+                    return -1
+                } else if (a.created_at < b.created_at) {
+                    return 1
+                } else {
+                    return 0
+                }
+            })
+            this.setState({ comments })
+        })
     }
 
     renderComments = () => {
@@ -32,7 +43,6 @@ class Post extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        // console.log(event.target.content.value, this.state.post.id, this.props.user.id)
         this.setState({ addClicked: false })
         const body = {
             content: event.target.content.value,
@@ -56,7 +66,10 @@ class Post extends Component {
     render() {
         return (
             <div className="posting">
-                {this.state.post.id ? <PostCard postInfo={this.state.post} onHandleClick={this.handleClick} /> : null}
+                {/* Add a user bio for using following */}
+                {this.state.post.id ?
+                <PostCard postInfo={this.state.post} handleClickLike={this.props.handleLike} onHandleClick={this.handleClick} />
+                : null}
                 {this.state.addClicked ? 
                 <CommentForm handleSubmit={this.handleSubmit} />
                 : null }
