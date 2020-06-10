@@ -24,3 +24,20 @@
     border-radius: 10px;
     padding-bottom: 10px;
 }
+
+.post.form {
+    text-align: center;
+}
+
+.post.form textarea {
+    height: 75px;
+}
+
+.post.form input {
+    margin-bottom: 15px;
+}
+
+.posting .post.info {
+    display: flex;
+    justify-content: space-around;
+}

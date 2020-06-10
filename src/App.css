@@ -18,6 +18,10 @@ input, textarea {
   margin-bottom: 10px;
 }
 
+textarea {
+  height: 60px;
+}
+
 a:link {
   color: white;
   text-decoration: none;
@@ -48,4 +52,10 @@ button {
   width: 50%;
   padding-top: 20px;
   padding-left: 30px;
+}
+
+.about {
+  text-align: center;
+  padding-left: 50px;
+  padding-right: 50px;
 }

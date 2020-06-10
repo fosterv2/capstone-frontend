@@ -7,6 +7,7 @@ const Navbar = ({ loggedIn, signOut }) => {
             {/* <div><img src="" width="" height="" alt="cat-logo" /></div> */}
             <div><NavLink to="/about">About</NavLink></div>
             <div><NavLink to="/" exact>Home</NavLink></div>
+            {loggedIn ? <div><NavLink to="/new_post" exact>Make a Post</NavLink></div> : null}
             <div>{loggedIn ?
             <NavLink to="/login" exact onClick={signOut}>Sign Out</NavLink>
             : <NavLink to="/login">Login</NavLink>

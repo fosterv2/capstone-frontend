@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PostCard from '../components/PostCard'
 import Profile from './Profile'
 import GroupList from './GroupList'
-import PostForm from '../forms/PostForm'
+// import PostForm from '../forms/PostForm'
 import { fetchLike } from '../services/FormHook'
 import '../css/Home.css'
 
@@ -48,17 +48,17 @@ class Home extends Component {
         return this.props.groups.filter(group => !!group.users.find(user => user.id === this.props.user.id))
     }
 
-    handleClick = () => {
-        this.setState(prev => {
-            return { addClicked: !prev.addClicked }
-        })
-    }
+    // handleClick = () => {
+    //     this.setState(prev => {
+    //         return { addClicked: !prev.addClicked }
+    //     })
+    // }
 
-    handleSubmit = event => {
-        event.preventDefault()
-        this.props.handleSubmit(event)
-        this.setState({ addClicked: false })
-    }
+    // handleSubmit = event => {
+    //     event.preventDefault()
+    //     this.props.handleSubmit(event)
+    //     this.setState({ addClicked: false })
+    // }
 
     render() {
         const { user, history, loggedIn } = this.props
@@ -68,13 +68,13 @@ class Home extends Component {
                     {loggedIn ? <Profile user={user} history={history} /> : null}
                 </div>
                 <div className="posts">
-                    {loggedIn ?
+                    {/* {loggedIn ?
                     (
                         this.state.addClicked ?
                         <PostForm handleSubmit={this.handleSubmit} handleBack={this.handleClick} />
                         : <button onClick={this.handleClick}>Make a Post</button>
                     )
-                    : null}
+                    : null} */}
                     {this.renderPosts()}
                 </div>
                 <div className="groups">

@@ -11,6 +11,7 @@ import Post from './containers/Post'
 import ProfileForm from './forms/ProfileForm'
 import Group from './containers/Group'
 import AllGroups from './containers/AllGroups'
+import PostForm from './forms/PostForm'
 
 class App extends Component {
   state = {
@@ -109,9 +110,9 @@ class App extends Component {
       body: JSON.stringify(body)
     })
     .then(resp => resp.json())
-    .then(post => this.setState(prev => {
-      return { posts: [post, ...prev.posts] }
-    }))
+    // .then(post => this.setState(prev => {
+    //   return { posts: [post, ...prev.posts] }
+    // }))
   }
 
   handleGroupSubmit = event => {
@@ -182,7 +183,7 @@ class App extends Component {
               // posts={posts}
               user={currentUser}
               loggedIn={loggedIn}
-              handleSubmit={this.handlePostSubmit}
+              // handleSubmit={this.handlePostSubmit}
               groups={groups}
             />}
           />
@@ -195,6 +196,7 @@ class App extends Component {
               user={this.state.currentUser}
             />}
           />
+          <Route exact path="/new_post" render={props => <PostForm {...props} handleSubmit={this.handlePostSubmit} />} />
           <Route exact path="/update_user"
             render={props => <ProfileForm
               {...props}

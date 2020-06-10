@@ -1,8 +1,8 @@
 import React from 'react'
 import '../css/Profile.css'
 
-const Profile = ({ user, history }) => {
-    const { username, breed, owner_name, img_url } = user
+const Profile = props => {
+    const { username, breed, owner_name, img_url } = props.user
     return (
         <div className="profile card">
             <h2>{username}</h2>
@@ -11,7 +11,9 @@ const Profile = ({ user, history }) => {
                 <p>Breed: {breed}</p>
                 <p>Owner: {owner_name}</p>
                 {/* add followers */}
-                <button onClick={() => history.push("/update_user")}>Update Profile</button>
+                {props.history ?
+                <button onClick={() => props.history.push("/update_user")}>Update Profile</button>
+                : null}
             </div>
         </div>
     )

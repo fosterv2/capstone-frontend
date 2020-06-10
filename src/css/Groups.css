@@ -1,9 +1,10 @@
-.groups {
+.home .groups {
     position: fixed;
+    right: 0;
 }
 
 .user.groups {
-    width: 100%;
+    width: 25%;
     text-align: center;
     padding-top: 60px;
 }
@@ -21,10 +22,47 @@
 .all.groups {
     padding-top: 20px;
     padding-left: 50px;
-    width: 100%;
+    width: 50%;
 }
 
 .all.groups button {
     margin-left: 10px;
     margin-top: 5px;
+}
+
+.group {
+    text-align: center;
+    margin: 10px;
+}
+
+.group .users {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.group .users .profile.card {
+    width: 23%;
+    padding-top: 0;
+}
+
+.group .post.card {
+    width: 75%;
+    margin-left: 12%;
+}
+
+.main.groups {
+    padding-top: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.single.group {
+    width: 50%;
+    padding-right: 15%;
+}
+
+.all.groups .toggle.form {
+    width: 100%;
 }

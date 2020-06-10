@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const PostForm = ({ handleSubmit, handleBack }) => {
+const PostForm = ({ handleSubmit }) => {
     const [content, setContent] = useState("")
     const [img_url, setImage] = useState("")
 
@@ -12,11 +12,17 @@ const PostForm = ({ handleSubmit, handleBack }) => {
         setImage(event.target.value)
     }
 
+    const submitPost = event => {
+        event.preventDefault()
+        handleSubmit(event)
+        // history.push('/')
+    }
+
     return (
         <div className="post form">
-            <p className="back" onClick={handleBack}>Back</p>
+            <h1>Make a New Post</h1>
             {/* Add group? or put in group page? */}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={submitPost}>
                 <textarea
                     name="content"
                     placeholder="Enter post content"
@@ -28,7 +34,7 @@ const PostForm = ({ handleSubmit, handleBack }) => {
                     placeholder="Enter an image url"
                     value={img_url}
                     onChange={handleImgChange}
-                />
+                /><br />
                 <button type="submit">Submit</button>
             </form>
         </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PostCard from '../components/PostCard'
 import { fetchLike } from '../services/FormHook'
+import Profile from '../containers/Profile'
 
 class Group extends Component {
     state = {
@@ -19,7 +20,18 @@ class Group extends Component {
         .then(group => this.setState({ group }))
         fetch(`http://localhost:3000/posts/group/${group_id}`)
         .then(resp => resp.json())
-        .then(posts => this.setState({ posts }))
+        .then(posts => {
+            posts.sort((a, b) => {
+                if (a.created_at > b.created_at) {
+                    return -1
+                } else if (a.created_at < b.created_at) {
+                    return 1
+                } else {
+                    return 0
+                }
+            })
+            this.setState({ posts })
+        })
     }
 
     handleLike = (id, likes) => {
@@ -32,7 +44,7 @@ class Group extends Component {
     }
 
     listUsers = () => {
-        return this.state.group.users.map(user => <li key={user.id}>{user.username}</li>)
+        return this.state.group.users.map(user => <Profile key={user.id} user={user} />)
     }
 
     renderPosts = () => {
@@ -43,10 +55,11 @@ class Group extends Component {
 
     render() {
         return (
-            <div>
+            <div className="group">
                 <h1>{this.state.group.name}</h1>
                 <p>{this.state.group.description}</p>
-                <ul>{this.listUsers()}</ul>
+                <h2>Group Members:</h2>
+                <div className="users">{this.listUsers()}</div>
                 {this.renderPosts()}
             </div>
         )

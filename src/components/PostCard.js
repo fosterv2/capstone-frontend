@@ -30,7 +30,11 @@ const PostCard = props => {
                 <p>{likes} Likes <span onClick={() => props.handleClickLike(id, likes)}>+</span></p>
                 <p>{
                     props.onHandleClick ? 
-                    <span onClick={props.onHandleClick}>Add Comment</span>
+                    (
+                        // user.id === props.currentUser.id ?
+                        // <span onClick={() => console.log("Need a delete")}>Update Comment</span> :
+                        <span onClick={props.onHandleClick}>Add Comment</span>
+                    )
                     : <Link to={`/posts/${id}`}>Comments</Link>
                 }</p>
             </div>

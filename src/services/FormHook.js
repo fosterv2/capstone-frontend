@@ -1,15 +1,15 @@
-import { useState } from "react";
+// import { useState } from "react";
 
-export function useFormInput(initialState) {
-    const [value, setValue] = useState(initialState)
-    function handleChange(event) {
-        setValue(event.target.value)
-    }
-    return {
-        value,
-        onChange: handleChange
-    }
-}
+// export function useFormInput(initialState) {
+//     const [value, setValue] = useState(initialState)
+//     function handleChange(event) {
+//         setValue(event.target.value)
+//     }
+//     return {
+//         value,
+//         onChange: handleChange
+//     }
+// }
 
 export function fetchLike(id, likes) {
     return fetch(`http://localhost:3000/posts/${id}`, {
@@ -23,9 +23,4 @@ export function fetchLike(id, likes) {
         })
     })
     .then(resp => resp.json())
-    // .then(postReturn => {
-    //     this.setState(prev => {
-    //         return { posts: prev.posts.map(post => post.id === id ? postReturn : post) }
-    //     })
-    // })
 }
