@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import '../css/Groups.css'
 
 const GroupList = ({ groups, history }) => {
     const renderGroups = () => {
@@ -7,7 +8,7 @@ const GroupList = ({ groups, history }) => {
     }
 
     return (
-        <div>
+        <div className="user groups">
             <h3>Your Groups</h3>
             <ul>{renderGroups()}</ul>
             <button onClick={() => history.push('/groups')}>Seach more groups</button>

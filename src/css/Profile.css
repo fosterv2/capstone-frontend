@@ -1,17 +1,17 @@
+.profile {
+    position: fixed;
+    width: 25%;
+    left: 0;
+}
+
 .profile.card {
-    width: 100%;
+    width: 25%;
     text-align: center;
     color: white;
+    padding-top: 30px;
 }
 
 .profile.card img {
     max-width: 80%;
     border-radius: 50%;
-}
-
-.profile.card button {
-    background-color: #007bff;
-    color: white;
-    font-size: 17px;
-    border-radius: 5px;
 }

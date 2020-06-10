@@ -31,27 +31,6 @@
     padding-top: 20px;
     font-size: 17px;
     margin-bottom: 20px;
+    position: fixed;
+    width: 100%;
 }
-
-.navbar a:link {
-    color: white;
-    text-decoration: none;
-}
-
-.navbar a:visited {
-    color: white;
-}
-
-.navbar a:hover {
-    color: gray;
-}
-
-/* from Router */
-/* const link = {
-    width: '100px',
-    padding: '12px',
-    margin: '0 6px 6px',
-    background: 'blue',
-    textDecoration: 'none',
-    color: 'white',
-} */

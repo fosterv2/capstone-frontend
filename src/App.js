@@ -113,24 +113,61 @@ class App extends Component {
       return { posts: [post, ...prev.posts] }
     }))
   }
+
+  handleGroupSubmit = event => {
+    event.preventDefault()
+    const body = {
+      name: event.target.name.value,
+      description: event.target.description.value,
+      user_id: this.state.currentUser.id
+    }
+    fetch("http://localhost:3000/groups", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify(body)
+    })
+    .then(resp => resp.json())
+    .then(group => this.setState(prev => {
+      return { groups: [...prev.groups, group] }
+    }))
+  }
   
-  handleLike = (id, likes) => {
-    fetch(`http://localhost:3000/posts/${id}`, {
-      method: "PATCH",
+  // handleLike = (id, likes) => {
+  //   fetch(`http://localhost:3000/posts/${id}`, {
+  //     method: "PATCH",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       likes: likes + 1
+  //     })
+  //   })
+  //   .then(resp => resp.json())
+  //   .then(postReturn => {
+  //     this.setState(prev => {
+  //       return { posts: prev.posts.map(post => post.id === id ? postReturn : post) }
+  //     })
+  //   })
+  // }
+
+  handleJoinGroup = group_id => {
+    fetch("http://localhost:3000/user_groups", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       body: JSON.stringify({
-        likes: likes + 1
+        user_id: this.state.currentUser.id,
+        group_id: group_id,
       })
     })
     .then(resp => resp.json())
-    .then(postReturn => {
-      this.setState(prev => {
-        return { posts: prev.posts.map(post => post.id === id ? postReturn : post) }
-      })
-    })
+    .then(console.log)
   }
 
   render() {
@@ -138,7 +175,7 @@ class App extends Component {
     return (
       <Router>
         <Navbar loggedIn={loggedIn} signOut={this.onSignOut} />
-        <div>
+        <div className="main">
           <Route exact path="/"
             render={props => <Home
               {...props}
@@ -165,7 +202,13 @@ class App extends Component {
               handleUpdateProfile={this.handleUpdateUser}
             />}
           />
-          <Route exact path="/groups" render={props => <AllGroups {...props} groups={groups} />} />
+          <Route exact path="/groups"
+            render={props => <AllGroups
+              {...props} groups={groups}
+              handleSubmit={this.handleGroupSubmit}
+              handleClick={this.handleJoinGroup}
+            />}
+          />
           <Route exact path="/groups/:group_id" render={props => <Group {...props} />} />
         </div>
       </Router>

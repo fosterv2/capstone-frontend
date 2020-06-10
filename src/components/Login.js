@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 const URL = "http://localhost:3000/auth"
 const EMPTYFIELDS = {
@@ -45,7 +46,7 @@ class Login extends Component {
     render() {
         const { username, password } = this.state.fields
         return (
-            <div>
+            <div className="ui form">
                 {this.state.error ? <h1>Wrong inputs</h1> : null}
                 <form onSubmit={this.handleSubmit}>
                     <div className="ui field">
@@ -74,10 +75,11 @@ class Login extends Component {
                     </div>
                 </form>
                 <div className="toggle button">
-                    <h2>or</h2>
+                    <p>Or <Link to="/signup">Sign Up</Link></p>
+                    {/* <h2>or</h2>
                     <button type="submit" onClick={() => this.props.history.push("/signup")}>
                         Sign Up
-                    </button>
+                    </button> */}
                 </div>
             </div>
         )

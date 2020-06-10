@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const CommentForm = ({ handleSubmit }) => {
+const CommentForm = ({ handleSubmit, handleBack }) => {
     const [content, setContent] = useState("")
 
     const handleChange = event => {
@@ -8,7 +8,8 @@ const CommentForm = ({ handleSubmit }) => {
     }
 
     return (
-        <div>
+        <div className="toggle form">
+            <p className="back" onClick={handleBack}>Back</p>
             <form onSubmit={handleSubmit}>
                 <textarea
                     name="content"

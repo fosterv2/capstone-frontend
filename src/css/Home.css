@@ -10,16 +10,17 @@
 
 .posts {
     width: 50%;
+    text-align: center;
+    margin-top: 23px;
 }
 
 .post.card {
-    border: 2px solid gray;
+    border: 3px solid #007bff;
     text-align: center;
     border-radius: 5px;
     /* padding: 10px; */
     margin: 10px;
     background-color: black;
-    color: white
 }
 
 .post.card img {
@@ -32,12 +33,12 @@
     justify-content: space-around;
     background-color: white;
     color: black;
-    border-bottom: 2px solid gray;
+    border-bottom: 2px solid #007bff;
 }
 
 .content {
-    border-top: 2px solid gray;
-    border-bottom: 2px solid gray;
+    border-top: 2px solid #007bff;
+    border-bottom: 3px solid #007bff;
     padding: 10px;
 }
 
@@ -48,4 +49,8 @@
 
 .post.buttons a:hover {
     color: gray;
+}
+
+.post.form form {
+    text-align: center;
 }

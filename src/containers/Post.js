@@ -80,7 +80,7 @@ class Post extends Component {
                 <PostCard postInfo={this.state.post} handleClickLike={this.handleLike} onHandleClick={this.handleClick} />
                 : null}
                 {this.state.addClicked ? 
-                <CommentForm handleSubmit={this.handleSubmit} />
+                <CommentForm handleSubmit={this.handleSubmit} handleBack={this.handleClick} />
                 : null }
                 {this.renderComments()}
                 {/* : <button onClick={this.handleClick}>Add Comment</button>} */}

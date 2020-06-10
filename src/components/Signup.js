@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 const URL = "http://localhost:3000/users"
 const EMPTYFIELDS = {
@@ -112,10 +113,11 @@ class Signup extends Component {
                     </div>
                 </form>
                 <div className="toggle button">
-                    <h2>or</h2>
+                    <p>Or <Link to="/login">Login</Link></p>
+                    {/* <h2>or</h2>
                     <button type="submit" onClick={() => this.props.history.push("/login")}>
                         Login
-                    </button>
+                    </button> */}
                 </div>
             </div>
         )

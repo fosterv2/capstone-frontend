@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const GroupForm = ({ handleSubmit }) => {
+const GroupForm = ({ handleSubmit, handleBack }) => {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
 
@@ -13,7 +13,8 @@ const GroupForm = ({ handleSubmit }) => {
     }
 
     return (
-        <div>
+        <div className="toggle form">
+            <p className="back" onClick={handleBack}>Back</p>
             <form onSubmit={handleSubmit}>
                 <input
                     name="name"
@@ -26,7 +27,7 @@ const GroupForm = ({ handleSubmit }) => {
                     placeholder="Enter group description"
                     value={description}
                     onChange={handleChangeDescription}
-                />
+                /><br />
                 <button type="submit">Submit</button>
             </form>
         </div>

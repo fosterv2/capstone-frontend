@@ -4,9 +4,23 @@
     align-items: center;
 }
 
+.posting .post.card {
+    width: 60%;
+}
+
 .comment.card {
     width: 50%;
     background-color: white;
     text-align: center;
     border: 2px solid black;
+    color: black;
+}
+
+.toggle.form {
+    width: 50%;
+    text-align: center;
+    margin-bottom: 10px;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    padding-bottom: 10px;
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const PostForm = ({ handleSubmit }) => {
+const PostForm = ({ handleSubmit, handleBack }) => {
     const [content, setContent] = useState("")
     const [img_url, setImage] = useState("")
 
@@ -13,7 +13,8 @@ const PostForm = ({ handleSubmit }) => {
     }
 
     return (
-        <div>
+        <div className="post form">
+            <p className="back" onClick={handleBack}>Back</p>
             {/* Add group? or put in group page? */}
             <form onSubmit={handleSubmit}>
                 <textarea

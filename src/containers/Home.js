@@ -69,7 +69,11 @@ class Home extends Component {
                 </div>
                 <div className="posts">
                     {loggedIn ?
-                    (this.state.addClicked ? <PostForm handleSubmit={this.handleSubmit} /> : <span onClick={this.handleClick}>Make a Post</span>)
+                    (
+                        this.state.addClicked ?
+                        <PostForm handleSubmit={this.handleSubmit} handleBack={this.handleClick} />
+                        : <button onClick={this.handleClick}>Make a Post</button>
+                    )
                     : null}
                     {this.renderPosts()}
                 </div>

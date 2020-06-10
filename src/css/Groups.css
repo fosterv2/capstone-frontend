@@ -1,0 +1,30 @@
+.groups {
+    position: fixed;
+}
+
+.user.groups {
+    width: 100%;
+    text-align: center;
+    padding-top: 60px;
+}
+
+.user.groups ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.user.groups button {
+    margin-top: 15px;
+}
+
+.all.groups {
+    padding-top: 20px;
+    padding-left: 50px;
+    width: 100%;
+}
+
+.all.groups button {
+    margin-left: 10px;
+    margin-top: 5px;
+}
