@@ -32,7 +32,7 @@ class Signup extends Component {
             body: JSON.stringify(this.state.fields)
         })
         .then(resp => resp.json())
-        .then(user => {console.log(user)
+        .then(user => {
             if (!user.error) {
                 this.props.onLogin(user)
                 this.props.history.push('/')

@@ -14,7 +14,9 @@ class AllGroups extends Component {
         return this.props.groups.map(group => {
             return <div className="join" key={group.id}>
                 <p><span onClick={() => this.handleClickName(group)}>{group.name}</span><br />
-                <button onClick={() => this.props.handleClick(group.id)}>Join</button></p>
+                {true ?
+                <button onClick={() => this.props.handleJoinClick(group.id)}>Join</button>
+                : <button onClick={() => this.props.handleLeaveClick(group.id)}>Leave</button>}</p>
             </div>
         })
     }
@@ -29,12 +31,18 @@ class AllGroups extends Component {
         this.setState({ currentGroup: group })
     }
 
+    handleSubmit = event => {
+        event.preventDefault()
+        this.props.handleSubmit(event)
+        this.setState({ addClicked: false })
+    }
+
     render() {
         return (
             <div className="main groups">
                 <div className="all groups">
                     {this.state.addClicked ?
-                    <GroupForm handleSubmit={this.props.handleSubmit} handleBack={this.handleClickButton} />
+                    <GroupForm handleSubmit={this.handleSubmit} handleBack={this.handleClickButton} />
                     : <button onClick={this.handleClickButton}>Start a new Group</button>}
                     {this.renderGroups()}
                 </div>

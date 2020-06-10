@@ -18,7 +18,8 @@ class App extends Component {
     // posts: [],
     currentUser: {},
     loggedIn: !!localStorage.getItem("token"),
-    groups: []
+    groups: [],
+    userGroups: []
   }
 
   componentDidMount() {
@@ -35,9 +36,15 @@ class App extends Component {
       })
       .then(resp => resp.json())
       .then(user => {
-        this.setState({ currentUser: user.user })
+        this.setState({
+          currentUser: user.user,
+        })
       })
     }
+  }
+
+  componentDidUpdate() {
+    this.getUserGroups()
   }
 
   // fetchPosts = () => {
@@ -116,7 +123,6 @@ class App extends Component {
   }
 
   handleGroupSubmit = event => {
-    event.preventDefault()
     const body = {
       name: event.target.name.value,
       description: event.target.description.value,
@@ -171,8 +177,35 @@ class App extends Component {
     .then(console.log)
   }
 
+  handleLeaveGroup = group_id => {
+    this.setState(prev => {
+      return { userGroups: prev.userGroups.filter(group => group.id !== group_id) }
+    })
+    // fetch("http://localhost:3000/user_groups", {
+    //   method: "DELETE",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json"
+    //   },
+    //   body: JSON.stringify({
+    //     user_id: this.state.currentUser.id,
+    //     group_id: group_id,
+    //   })
+    // })
+  }
+
+  getUserGroups = () => {
+    this.setState(prev => {
+      return { 
+        userGroups: prev.groups.filter(group => {
+          return !!group.users.find(user => user.id === prev.currentUser.user.id)
+        })
+      }
+    })
+  }
+
   render() {
-    const { loggedIn, currentUser, groups } = this.state
+    const { loggedIn, currentUser, groups, userGroups } = this.state
     return (
       <Router>
         <Navbar loggedIn={loggedIn} signOut={this.onSignOut} />
@@ -184,7 +217,7 @@ class App extends Component {
               user={currentUser}
               loggedIn={loggedIn}
               // handleSubmit={this.handlePostSubmit}
-              groups={groups}
+              groups={userGroups}
             />}
           />
           <Route exact path="/login" render={props => <Login {...props} onLogin={this.onLogin} />} />
@@ -196,7 +229,12 @@ class App extends Component {
               user={this.state.currentUser}
             />}
           />
-          <Route exact path="/new_post" render={props => <PostForm {...props} handleSubmit={this.handlePostSubmit} />} />
+          <Route exact path="/new_post"
+            render={props => <PostForm
+              {...props}
+              handleSubmit={this.handlePostSubmit}
+            />}
+          />
           <Route exact path="/update_user"
             render={props => <ProfileForm
               {...props}
@@ -206,9 +244,12 @@ class App extends Component {
           />
           <Route exact path="/groups"
             render={props => <AllGroups
-              {...props} groups={groups}
+              {...props}
+              groups={groups}
+              userGroups={userGroups}
               handleSubmit={this.handleGroupSubmit}
-              handleClick={this.handleJoinGroup}
+              handleJoinClick={this.handleJoinGroup}
+              handleLeaveClick={this.handleLeaveGroup}
             />}
           />
           <Route exact path="/groups/:group_id" render={props => <Group {...props} />} />
