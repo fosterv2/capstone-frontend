@@ -7,7 +7,14 @@ class AllGroups extends Component {
         currentGroup: {
             name: "",
             description: ""
-        }
+        },
+        userGroups: []
+    }
+
+    findUserGroups = () => {
+        this.setState({
+            userGroups: this.props.groups.filter(group => !!group.users.find(user => user.id === this.props.user.id))
+        })
     }
 
     renderGroups = () => {

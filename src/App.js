@@ -38,13 +38,12 @@ class App extends Component {
       .then(user => {
         this.setState({
           currentUser: user.user,
+          // userGroups: this.state.groups.filter(group => {
+          //   return !!group.users.find(groupUser => groupUser.id === this.props.user.id)
+          // })
         })
       })
     }
-  }
-
-  componentDidUpdate() {
-    this.getUserGroups()
   }
 
   // fetchPosts = () => {
@@ -205,7 +204,7 @@ class App extends Component {
   }
 
   render() {
-    const { loggedIn, currentUser, groups, userGroups } = this.state
+    const { loggedIn, currentUser, groups } = this.state
     return (
       <Router>
         <Navbar loggedIn={loggedIn} signOut={this.onSignOut} />
@@ -217,7 +216,7 @@ class App extends Component {
               user={currentUser}
               loggedIn={loggedIn}
               // handleSubmit={this.handlePostSubmit}
-              groups={userGroups}
+              groups={groups}
             />}
           />
           <Route exact path="/login" render={props => <Login {...props} onLogin={this.onLogin} />} />
@@ -246,7 +245,8 @@ class App extends Component {
             render={props => <AllGroups
               {...props}
               groups={groups}
-              userGroups={userGroups}
+              // userGroups={userGroups}
+              user={currentUser}
               handleSubmit={this.handleGroupSubmit}
               handleJoinClick={this.handleJoinGroup}
               handleLeaveClick={this.handleLeaveGroup}
