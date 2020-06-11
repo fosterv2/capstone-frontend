@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const PostForm = ({ handleSubmit }) => {
+const PostForm = ({ handleSubmit, history }) => {
     const [content, setContent] = useState("")
     const [img_url, setImage] = useState("")
 
@@ -15,7 +15,7 @@ const PostForm = ({ handleSubmit }) => {
     const submitPost = event => {
         event.preventDefault()
         handleSubmit(event)
-        // history.push('/')
+        history.push('/')
     }
 
     return (

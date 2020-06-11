@@ -3,20 +3,20 @@ import PostCard from '../components/PostCard'
 import CommentCard from '../components/CommentCard'
 import CommentForm from '../forms/CommentForm'
 import Profile from '../containers/Profile'
-import { fetchLike } from '../services/FormHook'
+// import { fetchLike } from '../services/FormHook'
 import '../css/Post.css'
 
 class Post extends Component {
     state = {
-        post: {},
+        // post: {},
         comments: [],
         addClicked: false
     }
 
     componentDidMount() {
-        fetch(`http://localhost:3000/posts/${this.props.match.params.post_id}`)
-        .then(resp => resp.json())
-        .then(post => this.setState({ post }))
+        // fetch(`http://localhost:3000/posts/${this.props.match.params.post_id}`)
+        // .then(resp => resp.json())
+        // .then(post => this.setState({ post }))
         fetch(`http://localhost:3000/comments/${this.props.match.params.post_id}`)
         .then(resp => resp.json())
         .then(comments => {
@@ -33,11 +33,15 @@ class Post extends Component {
         })
     }
 
-    handleLike = (id, likes) => {
-        fetchLike(id, likes)
-        .then(postReturn => {
-            this.setState({ post: postReturn })
-        })
+    // handleLike = (id, likes) => {
+    //     fetchLike(id, likes)
+    //     .then(postReturn => {
+    //         this.setState({ post: postReturn })
+    //     })
+    // }
+
+    getPost = () => {
+        return this.props.posts.find(post => post.id == this.props.match.params.post_id)
     }
 
     renderComments = () => {
@@ -76,11 +80,11 @@ class Post extends Component {
         return (
             <div className="posting">
                 <div className="post info">
-                {this.state.post.user ? <Profile user={this.state.post.user} /> : null}
-                {this.state.post.id ?
+                <Profile user={this.props.user} />
+                {!!this.getPost() ?
                 <PostCard
-                    postInfo={this.state.post}
-                    handleClickLike={this.handleLike}
+                    postInfo={this.getPost()}
+                    handleClickLike={this.props.handleLike}
                     onHandleClick={this.handleClick}
                     // currentUser={this.props.user}
                     // onDelete={this.handleDelete}
@@ -91,7 +95,6 @@ class Post extends Component {
                 <CommentForm handleSubmit={this.handleSubmit} handleBack={this.handleClick} />
                 : null }
                 {this.renderComments()}
-                {/* : <button onClick={this.handleClick}>Add Comment</button>} */}
             </div>
         )
     }

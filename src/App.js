@@ -15,15 +15,17 @@ import PostForm from './forms/PostForm'
 
 class App extends Component {
   state = {
-    // posts: [],
-    currentUser: {},
+    posts: [],
+    currentUser: {
+      id: "",
+    },
     loggedIn: !!localStorage.getItem("token"),
     groups: [],
     userGroups: []
   }
 
   componentDidMount() {
-    // this.fetchPosts()
+    this.fetchPosts()
     this.fetchGroups()
     const token = localStorage.getItem("token")
     if (token) {
@@ -37,31 +39,28 @@ class App extends Component {
       .then(resp => resp.json())
       .then(user => {
         this.setState({
-          currentUser: user.user,
-          // userGroups: this.state.groups.filter(group => {
-          //   return !!group.users.find(groupUser => groupUser.id === this.props.user.id)
-          // })
+          currentUser: user.user
         })
       })
     }
   }
 
-  // fetchPosts = () => {
-  //   fetch("http://localhost:3000/posts")
-  //   .then(resp => resp.json())
-  //   .then(posts => {
-  //     posts.sort((a, b) => {
-  //       if (a.created_at > b.created_at) {
-  //         return -1
-  //       } else if (a.created_at < b.created_at) {
-  //         return 1
-  //       } else {
-  //         return 0
-  //       }
-  //     })
-  //     this.setState({ posts })
-  //   })
-  // }
+  fetchPosts = () => {
+    fetch("http://localhost:3000/posts")
+    .then(resp => resp.json())
+    .then(posts => {
+      posts.sort((a, b) => {
+        if (a.created_at > b.created_at) {
+          return -1
+        } else if (a.created_at < b.created_at) {
+          return 1
+        } else {
+          return 0
+        }
+      })
+      this.setState({ posts })
+    })
+  }
 
   fetchGroups = () => {
     fetch("http://localhost:3000/groups")
@@ -116,9 +115,9 @@ class App extends Component {
       body: JSON.stringify(body)
     })
     .then(resp => resp.json())
-    // .then(post => this.setState(prev => {
-    //   return { posts: [post, ...prev.posts] }
-    // }))
+    .then(post => this.setState(prev => {
+      return { posts: [post, ...prev.posts] }
+    }))
   }
 
   handleGroupSubmit = event => {
@@ -141,24 +140,24 @@ class App extends Component {
     }))
   }
   
-  // handleLike = (id, likes) => {
-  //   fetch(`http://localhost:3000/posts/${id}`, {
-  //     method: "PATCH",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       likes: likes + 1
-  //     })
-  //   })
-  //   .then(resp => resp.json())
-  //   .then(postReturn => {
-  //     this.setState(prev => {
-  //       return { posts: prev.posts.map(post => post.id === id ? postReturn : post) }
-  //     })
-  //   })
-  // }
+  handleLike = (id, likes) => {
+    fetch(`http://localhost:3000/posts/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        likes: likes + 1
+      })
+    })
+    .then(resp => resp.json())
+    .then(postReturn => {
+      this.setState(prev => {
+        return { posts: prev.posts.map(post => post.id === id ? postReturn : post) }
+      })
+    })
+  }
 
   handleJoinGroup = group_id => {
     fetch("http://localhost:3000/user_groups", {
@@ -173,7 +172,9 @@ class App extends Component {
       })
     })
     .then(resp => resp.json())
-    .then(console.log)
+    .then(group => this.setState(prev => {
+      return { groups: [...prev.groups, group]}
+    }))
   }
 
   handleLeaveGroup = group_id => {
@@ -194,17 +195,11 @@ class App extends Component {
   }
 
   getUserGroups = () => {
-    this.setState(prev => {
-      return { 
-        userGroups: prev.groups.filter(group => {
-          return !!group.users.find(user => user.id === prev.currentUser.user.id)
-        })
-      }
-    })
+    return this.state.groups.filter(group => !!group.users.find(user => user.id === this.state.currentUser.id))
   }
 
   render() {
-    const { loggedIn, currentUser, groups } = this.state
+    const { posts, loggedIn, currentUser, groups } = this.state
     return (
       <Router>
         <Navbar loggedIn={loggedIn} signOut={this.onSignOut} />
@@ -212,11 +207,12 @@ class App extends Component {
           <Route exact path="/"
             render={props => <Home
               {...props}
-              // posts={posts}
+              posts={posts}
               user={currentUser}
               loggedIn={loggedIn}
+              handleLike={this.handleLike}
               // handleSubmit={this.handlePostSubmit}
-              groups={groups}
+              userGroups={this.getUserGroups()}
             />}
           />
           <Route exact path="/login" render={props => <Login {...props} onLogin={this.onLogin} />} />
@@ -226,6 +222,8 @@ class App extends Component {
             render={props => <Post
               {...props}
               user={this.state.currentUser}
+              posts={posts}
+              handleLike={this.handleLike}
             />}
           />
           <Route exact path="/new_post"
@@ -245,7 +243,7 @@ class App extends Component {
             render={props => <AllGroups
               {...props}
               groups={groups}
-              // userGroups={userGroups}
+              // userGroups={this.getUserGroups()}
               user={currentUser}
               handleSubmit={this.handleGroupSubmit}
               handleJoinClick={this.handleJoinGroup}
