@@ -16,6 +16,28 @@ const PostCard = props => {
         }
     }
 
+    const renderDiv = () => {
+        const { loggedIn, onHandleClick } = props
+        if (loggedIn && onHandleClick) {
+            return <div className="post buttons">
+                <p>{likes} Likes <span onClick={() => props.handleClickLike(id, likes)}>+</span></p>
+                <p><span onClick={props.onHandleClick}>Add Comment</span></p>
+            </div>
+        } else if (onHandleClick) {
+            return null
+        } else if (loggedIn) {
+            return <div className="post buttons">
+                <p>{likes} Likes <span onClick={() => props.handleClickLike(id, likes)}>+</span></p>
+                <p><Link to={`/posts/${id}`}>Comments</Link></p>
+            </div>
+        } else {
+            return <div className="post buttons">
+                <p></p>
+                <Link to={`/posts/${id}`}>Comments</Link>
+            </div>
+        }
+    }
+
     return (
         <div className="post card">
             <div className="heading">
@@ -26,18 +48,25 @@ const PostCard = props => {
             <div className="content">
                 <p>{content}</p>
             </div>
-            <div className="post buttons">
-                <p>{likes} Likes <span onClick={() => props.handleClickLike(id, likes)}>+</span></p>
+            {/* <div className="post buttons">
+                {
+                    props.loggedIn ?
+                    <p>{likes} Likes <span onClick={() => props.handleClickLike(id, likes)}>+</span></p>
+                    : null
+                }
                 <p>{
                     props.onHandleClick ? 
-                    (
-                        // user.id === props.currentUser.id ?
-                        // <span onClick={() => console.log("Need a delete")}>Update Comment</span> :
-                        <span onClick={props.onHandleClick}>Add Comment</span>
-                    )
+                    <span onClick={props.onHandleClick}>Add Comment</span>
                     : <Link to={`/posts/${id}`}>Comments</Link>
                 }</p>
+            </div> */}
+            {renderDiv()}
+            {user.id === props.user.id ?
+            <div className="post buttons">
+                <p onClick={() => console.log("Need an update")}>Update Comment</p>
+                <p onClick={() => console.log("Need a delete")}>Delete Comment</p>
             </div>
+            : null}
         </div>
     )
 }

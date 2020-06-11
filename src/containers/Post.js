@@ -8,15 +8,11 @@ import '../css/Post.css'
 
 class Post extends Component {
     state = {
-        // post: {},
         comments: [],
         addClicked: false
     }
 
     componentDidMount() {
-        // fetch(`http://localhost:3000/posts/${this.props.match.params.post_id}`)
-        // .then(resp => resp.json())
-        // .then(post => this.setState({ post }))
         fetch(`http://localhost:3000/comments/${this.props.match.params.post_id}`)
         .then(resp => resp.json())
         .then(comments => {
@@ -32,13 +28,6 @@ class Post extends Component {
             this.setState({ comments })
         })
     }
-
-    // handleLike = (id, likes) => {
-    //     fetchLike(id, likes)
-    //     .then(postReturn => {
-    //         this.setState({ post: postReturn })
-    //     })
-    // }
 
     getPost = () => {
         // eslint-disable-next-line
@@ -81,13 +70,14 @@ class Post extends Component {
         return (
             <div className="posting">
                 <div className="post info">
-                <Profile user={this.props.user} />
+                <Profile user={this.getPost().user} />
                 {!!this.getPost() ?
                 <PostCard
                     postInfo={this.getPost()}
                     handleClickLike={this.props.handleLike}
                     onHandleClick={this.handleClick}
-                    // currentUser={this.props.user}
+                    user={this.props.user}
+                    loggedIn={this.props.loggedIn}
                     // onDelete={this.handleDelete}
                 />
                 : null}

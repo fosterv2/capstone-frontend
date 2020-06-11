@@ -39,8 +39,9 @@ class Home extends Component {
     // }
 
     renderPosts = () => {
-        return this.props.posts.map(post => {
-            return <PostCard key={post.id} handleClickLike={this.props.handleLike} postInfo={post} />
+        const { posts, handleLike, user, loggedIn } = this.props
+        return posts.map(post => {
+            return <PostCard key={post.id} handleClickLike={handleLike} postInfo={post} user={user} loggedIn={loggedIn} />
         })
     }
 

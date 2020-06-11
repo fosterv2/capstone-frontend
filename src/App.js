@@ -222,6 +222,7 @@ class App extends Component {
               user={this.state.currentUser}
               posts={posts}
               handleLike={this.handleLike}
+              loggedIn={loggedIn}
             />}
           />
           <Route exact path="/new_post"
