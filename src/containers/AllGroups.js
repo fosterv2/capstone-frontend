@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import GroupForm from '../forms/GroupForm'
+import { Link } from 'react-router-dom'
 
 class AllGroups extends Component {
     state = {
@@ -7,17 +8,32 @@ class AllGroups extends Component {
         currentGroup: {
             name: "",
             description: ""
-        },
-        // userGroups: []
+        }
+    }
+
+    renderGroupsOld = () => {
+        return this.props.groups.map(group => {
+            return <div className="join" key={group.id}>
+                <p><span onClick={() => this.handleClickName(group)}>{group.name}</span><br />
+                {
+                    !group.users.find(user => user.id === this.props.user.id) ?
+                    <button onClick={() => this.props.handleJoinClick(group.id)}>Join</button>
+                    : <button onClick={() => this.props.handleLeaveClick(group.id)}>Leave</button>
+                }</p>
+            </div>
+        })
     }
 
     renderGroups = () => {
         return this.props.groups.map(group => {
             return <div className="join" key={group.id}>
+            {
+                !group.users.find(user => user.id === this.props.user.id) ?
                 <p><span onClick={() => this.handleClickName(group)}>{group.name}</span><br />
-                {!group.users.find(user => user.id === this.props.user.id) ?
-                <button onClick={() => this.props.handleJoinClick(group.id)}>Join</button>
-                : <button onClick={() => this.props.handleLeaveClick(group.id)}>Leave</button>}</p>
+                <button onClick={() => this.props.handleJoinClick(group.id)}>Join</button></p>
+                : <p><Link to={`/groups/${group.id}`}>{group.name}</Link><br />
+                <button onClick={() => this.props.handleLeaveClick(group.id)}>Leave</button></p>
+            }
             </div>
         })
     }
@@ -42,9 +58,12 @@ class AllGroups extends Component {
         return (
             <div className="main groups">
                 <div className="all groups">
-                    {this.state.addClicked ?
-                    <GroupForm handleSubmit={this.handleSubmit} handleBack={this.handleClickButton} />
-                    : <button onClick={this.handleClickButton}>Start a new Group</button>}
+                    {
+                        this.state.addClicked ?
+                        <GroupForm handleSubmit={this.handleSubmit} handleBack={this.handleClickButton} />
+                        : <button onClick={this.handleClickButton}>Start a new Group</button>
+                    }
+                    <h3>Click on a group for info</h3>
                     {this.renderGroups()}
                 </div>
                 <div className="single group">

@@ -41,6 +41,7 @@ class Post extends Component {
     // }
 
     getPost = () => {
+        // eslint-disable-next-line
         return this.props.posts.find(post => post.id == this.props.match.params.post_id)
     }
 

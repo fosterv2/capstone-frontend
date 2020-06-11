@@ -53,11 +53,18 @@ class Group extends Component {
         })
     }
 
+    handleClickLeave = () => {
+        this.props.handleClickLeave()
+        this.props.history.push('/groups')
+    }
+
     render() {
         return (
             <div className="group">
                 <h1>{this.state.group.name}</h1>
                 <p>{this.state.group.description}</p>
+                <button onClick={() => this.props.history.push('/groups')}>See all Groups</button>
+                <button onClick={this.handleClickLeave}>Leave Group</button>
                 <h2>Group Members:</h2>
                 <div className="users">{this.listUsers()}</div>
                 {this.renderPosts()}

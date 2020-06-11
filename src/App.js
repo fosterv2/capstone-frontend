@@ -20,8 +20,7 @@ class App extends Component {
       id: "",
     },
     loggedIn: !!localStorage.getItem("token"),
-    groups: [],
-    userGroups: []
+    groups: []
   }
 
   componentDidMount() {
@@ -160,38 +159,37 @@ class App extends Component {
   }
 
   handleJoinGroup = group_id => {
-    fetch("http://localhost:3000/user_groups", {
-      method: "POST",
+    fetch(`http://localhost:3000/users/${this.state.currentUser.id}/groups`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       body: JSON.stringify({
-        user_id: this.state.currentUser.id,
         group_id: group_id,
       })
     })
     .then(resp => resp.json())
-    .then(group => this.setState(prev => {
-      return { groups: [...prev.groups, group]}
+    .then(returnGroup => this.setState(prev => {
+      return { groups: prev.groups.map(group => group.id === group_id ? returnGroup : group) }
     }))
   }
 
   handleLeaveGroup = group_id => {
-    this.setState(prev => {
-      return { userGroups: prev.userGroups.filter(group => group.id !== group_id) }
+    fetch(`http://localhost:3000/users/${this.state.currentUser.id}/groups`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        group_id: group_id,
+      })
     })
-    // fetch("http://localhost:3000/user_groups", {
-    //   method: "DELETE",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json"
-    //   },
-    //   body: JSON.stringify({
-    //     user_id: this.state.currentUser.id,
-    //     group_id: group_id,
-    //   })
-    // })
+    .then(resp => resp.json())
+    .then(returnGroup => this.setState(prev => {
+      return { groups: prev.groups.map(group => group.id === group_id ? returnGroup : group) }
+    }))
   }
 
   getUserGroups = () => {
@@ -250,7 +248,12 @@ class App extends Component {
               handleLeaveClick={this.handleLeaveGroup}
             />}
           />
-          <Route exact path="/groups/:group_id" render={props => <Group {...props} />} />
+          <Route exact path="/groups/:group_id"
+            render={props => <Group
+              {...props}
+              handleClickLeave={this.handleLeaveGroup}
+            />}
+          />
         </div>
       </Router>
     )
