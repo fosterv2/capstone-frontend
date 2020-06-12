@@ -2,7 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const PostCard = props => {
-    const { user, created_at, post_img, content, id, likes } = props.postInfo
+    const { user, created_at, post_img, content, id } = props.postInfo
+    const likes = 0
 
     const parseDate = date => {
         const dateArr = date.split("-")

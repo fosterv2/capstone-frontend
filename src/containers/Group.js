@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PostCard from '../components/PostCard'
+import AuthHOC from '../services/AuthHOC'
 import { fetchLike } from '../services/FormHook'
 import Profile from '../containers/Profile'
 
@@ -73,4 +74,4 @@ class Group extends Component {
     }
 }
 
-export default Group
+export default AuthHOC(Group)

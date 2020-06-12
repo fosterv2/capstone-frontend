@@ -1,4 +1,5 @@
 import React from 'react'
+import AuthHOC from '../services/AuthHOC'
 import '../css/Profile.css'
 
 const Profile = props => {
@@ -19,4 +20,4 @@ const Profile = props => {
     )
 }
 
-export default Profile
+export default AuthHOC(Profile)

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import GroupForm from '../forms/GroupForm'
 import { Link } from 'react-router-dom'
+import AuthHOC from '../services/AuthHOC'
 
 class AllGroups extends Component {
     state = {
@@ -75,4 +76,4 @@ class AllGroups extends Component {
     }
 }
 
-export default AllGroups
+export default AuthHOC(AllGroups)

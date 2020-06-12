@@ -192,6 +192,27 @@ class App extends Component {
     }))
   }
 
+  handleDeletePost = post_id => {
+    fetch(`http://localhost:3000/posts/${post_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        content: "This post has been deleted",
+        post_url: "",
+        // deleted: true
+      })
+    })
+    .then(resp => resp.json())
+    .then(postReturn => {
+      this.setState(prev => {
+        return { posts: prev.posts.map(post => post.id === post_id ? postReturn : post) }
+      })
+    })
+  }
+
   getUserGroups = () => {
     return this.state.groups.filter(group => !!group.users.find(user => user.id === this.state.currentUser.id))
   }
