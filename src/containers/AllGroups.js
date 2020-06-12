@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import GroupForm from '../forms/GroupForm'
 import { Link } from 'react-router-dom'
 import AuthHOC from '../services/AuthHOC'
+import { connect } from "react-redux";
 
 class AllGroups extends Component {
     state = {
@@ -10,19 +11,6 @@ class AllGroups extends Component {
             name: "",
             description: ""
         }
-    }
-
-    renderGroupsOld = () => {
-        return this.props.groups.map(group => {
-            return <div className="join" key={group.id}>
-                <p><span onClick={() => this.handleClickName(group)}>{group.name}</span><br />
-                {
-                    !group.users.find(user => user.id === this.props.user.id) ?
-                    <button onClick={() => this.props.handleJoinClick(group.id)}>Join</button>
-                    : <button onClick={() => this.props.handleLeaveClick(group.id)}>Leave</button>
-                }</p>
-            </div>
-        })
     }
 
     renderGroups = () => {
@@ -76,4 +64,10 @@ class AllGroups extends Component {
     }
 }
 
-export default AuthHOC(AllGroups)
+const mapStateToProps = state => {
+    return {
+        groups: state.groups
+    }
+}
+
+export default connect(mapStateToProps)(AuthHOC(AllGroups))

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PostCard from '../components/PostCard'
 import Profile from './Profile'
 import GroupList from './GroupList'
+import { connect } from "react-redux";
 import '../css/Home.css'
 
 class Home extends Component {
@@ -34,4 +35,11 @@ class Home extends Component {
     }
 }
 
-export default Home
+const mapStateToProps = state => {
+    return {
+        posts: state.posts,
+        // user
+    }
+}
+
+export default connect(mapStateToProps)(Home)

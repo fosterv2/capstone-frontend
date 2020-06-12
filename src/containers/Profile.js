@@ -1,9 +1,8 @@
 import React from 'react'
-import AuthHOC from '../services/AuthHOC'
 import '../css/Profile.css'
 
-const Profile = props => {
-    const { username, breed, owner_name, img_url } = props.user
+const Profile = ({ user, history }) => {
+    const { username, breed, owner_name, img_url } = user
     return (
         <div className="profile card">
             <h2>{username}</h2>
@@ -12,12 +11,10 @@ const Profile = props => {
                 <p>Breed: {breed}</p>
                 <p>Owner: {owner_name}</p>
                 {/* add followers */}
-                {props.history ?
-                <button onClick={() => props.history.push("/update_user")}>Update Profile</button>
-                : null}
+                <button onClick={() => history.push("/update_user")}>Update Profile</button>
             </div>
         </div>
     )
 }
 
-export default AuthHOC(Profile)
+export default Profile

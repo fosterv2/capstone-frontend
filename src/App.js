@@ -12,20 +12,20 @@ import ProfileForm from './forms/ProfileForm'
 import Group from './containers/Group'
 import AllGroups from './containers/AllGroups'
 import PostForm from './forms/PostForm'
+import { connect } from "react-redux";
+import { fetchPosts, fetchGroups } from "./redux";
 
 class App extends Component {
   state = {
-    posts: [],
     currentUser: {
       id: "",
     },
-    loggedIn: !!localStorage.getItem("token"),
-    groups: []
+    loggedIn: !!localStorage.getItem("token")
   }
 
   componentDidMount() {
-    this.fetchPosts()
-    this.fetchGroups()
+    this.props.fetchPosts()
+    this.props.fetchGroups()
     const token = localStorage.getItem("token")
     if (token) {
       fetch("http://localhost:3000/auth", {
@@ -42,23 +42,6 @@ class App extends Component {
         })
       })
     }
-  }
-
-  fetchPosts = () => {
-    fetch("http://localhost:3000/posts")
-    .then(resp => resp.json())
-    .then(posts => {
-      posts.sort((a, b) => {
-        if (a.created_at > b.created_at) {
-          return -1
-        } else if (a.created_at < b.created_at) {
-          return 1
-        } else {
-          return 0
-        }
-      })
-      this.setState({ posts })
-    })
   }
 
   fetchGroups = () => {
@@ -214,11 +197,11 @@ class App extends Component {
   }
 
   getUserGroups = () => {
-    return this.state.groups.filter(group => !!group.users.find(user => user.id === this.state.currentUser.id))
+    return this.props.groups.filter(group => !!group.users.find(user => user.id === this.state.currentUser.id))
   }
 
   render() {
-    const { posts, loggedIn, currentUser, groups } = this.state
+    const { loggedIn, currentUser } = this.state
     return (
       <Router>
         <Navbar loggedIn={loggedIn} signOut={this.onSignOut} />
@@ -226,11 +209,9 @@ class App extends Component {
           <Route exact path="/"
             render={props => <Home
               {...props}
-              posts={posts}
               user={currentUser}
               loggedIn={loggedIn}
               handleLike={this.handleLike}
-              // handleSubmit={this.handlePostSubmit}
               userGroups={this.getUserGroups()}
             />}
           />
@@ -241,7 +222,7 @@ class App extends Component {
             render={props => <Post
               {...props}
               user={this.state.currentUser}
-              posts={posts}
+              posts={this.props.posts}
               handleLike={this.handleLike}
               loggedIn={loggedIn}
             />}
@@ -262,8 +243,6 @@ class App extends Component {
           <Route exact path="/groups"
             render={props => <AllGroups
               {...props}
-              groups={groups}
-              // userGroups={this.getUserGroups()}
               user={currentUser}
               handleSubmit={this.handleGroupSubmit}
               handleJoinClick={this.handleJoinGroup}
@@ -282,4 +261,35 @@ class App extends Component {
   }
 }
 
-export default App;
+// import React, { Component } from "react";
+// import { connect } from "react-redux";
+// import { fetchPosts } from "./redux";
+
+// class App extends Component {
+//   componentDidMount() {
+//     this.props.fetchPosts()
+//   }
+
+//   render() {
+//     return (
+//       <div>There are {this.props.posts.length} posts</div>
+//     )
+//   }
+// }
+
+const mapStateToProps = state => {
+  return {
+    posts: state.posts,
+    groups: state.groups
+    // user
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchPosts: () => dispatch(fetchPosts()),
+    fetchGroups: () => dispatch(fetchGroups())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
