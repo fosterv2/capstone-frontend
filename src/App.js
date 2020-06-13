@@ -43,12 +43,6 @@ class App extends Component {
       })
     }
   }
-
-  fetchGroups = () => {
-    fetch("http://localhost:3000/groups")
-    .then(resp => resp.json())
-    .then(groups => this.setState({ groups }))
-  }
   
   onLogin = response => {
     localStorage.setItem("token", response.jwt)
@@ -80,47 +74,6 @@ class App extends Component {
       this.setState({ currentUser: user })
     })
   }
-
-  handlePostSubmit = event => {
-    const body = {
-      content: event.target.content.value,
-      post_img: event.target.img_url.value,
-      user_id: this.state.currentUser.id,
-      group_id: 2
-    }
-    fetch("http://localhost:3000/posts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify(body)
-    })
-    .then(resp => resp.json())
-    .then(post => this.setState(prev => {
-      return { posts: [post, ...prev.posts] }
-    }))
-  }
-
-  handleGroupSubmit = event => {
-    const body = {
-      name: event.target.name.value,
-      description: event.target.description.value,
-      user_id: this.state.currentUser.id
-    }
-    fetch("http://localhost:3000/groups", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify(body)
-    })
-    .then(resp => resp.json())
-    .then(group => this.setState(prev => {
-      return { groups: [...prev.groups, group] }
-    }))
-  }
   
   handleLike = (id, likes) => {
     fetch(`http://localhost:3000/posts/${id}`, {
@@ -141,65 +94,6 @@ class App extends Component {
     })
   }
 
-  handleJoinGroup = group_id => {
-    fetch(`http://localhost:3000/users/${this.state.currentUser.id}/groups`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        group_id: group_id,
-      })
-    })
-    .then(resp => resp.json())
-    .then(returnGroup => this.setState(prev => {
-      return { groups: prev.groups.map(group => group.id === group_id ? returnGroup : group) }
-    }))
-  }
-
-  handleLeaveGroup = group_id => {
-    fetch(`http://localhost:3000/users/${this.state.currentUser.id}/groups`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        group_id: group_id,
-      })
-    })
-    .then(resp => resp.json())
-    .then(returnGroup => this.setState(prev => {
-      return { groups: prev.groups.map(group => group.id === group_id ? returnGroup : group) }
-    }))
-  }
-
-  handleDeletePost = post_id => {
-    fetch(`http://localhost:3000/posts/${post_id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        content: "This post has been deleted",
-        post_url: "",
-        // deleted: true
-      })
-    })
-    .then(resp => resp.json())
-    .then(postReturn => {
-      this.setState(prev => {
-        return { posts: prev.posts.map(post => post.id === post_id ? postReturn : post) }
-      })
-    })
-  }
-
-  getUserGroups = () => {
-    return this.props.groups.filter(group => !!group.users.find(user => user.id === this.state.currentUser.id))
-  }
-
   render() {
     const { loggedIn, currentUser } = this.state
     return (
@@ -212,7 +106,6 @@ class App extends Component {
               user={currentUser}
               loggedIn={loggedIn}
               handleLike={this.handleLike}
-              userGroups={this.getUserGroups()}
             />}
           />
           <Route exact path="/login" render={props => <Login {...props} onLogin={this.onLogin} />} />
@@ -221,7 +114,7 @@ class App extends Component {
           <Route exact path="/posts/:post_id"
             render={props => <Post
               {...props}
-              user={this.state.currentUser}
+              user={currentUser}
               posts={this.props.posts}
               handleLike={this.handleLike}
               loggedIn={loggedIn}
@@ -230,13 +123,13 @@ class App extends Component {
           <Route exact path="/new_post"
             render={props => <PostForm
               {...props}
-              handleSubmit={this.handlePostSubmit}
+              user={currentUser}
             />}
           />
           <Route exact path="/update_user"
             render={props => <ProfileForm
               {...props}
-              user={this.state.currentUser}
+              user={currentUser}
               handleUpdateProfile={this.handleUpdateUser}
             />}
           />
@@ -279,7 +172,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts,
+    // posts: state.posts,
     groups: state.groups
     // user
   }

@@ -17,8 +17,12 @@ class Home extends Component {
         })
     }
 
+    getUserGroups = () => {
+      return this.props.groups.filter(group => !!group.users.find(user => user.id === this.props.user.id))
+    }
+
     render() {
-        const { user, history, loggedIn, userGroups } = this.props
+        const { user, history, loggedIn } = this.props
         return (
             <div className="home">
                 <div className="profile">
@@ -28,7 +32,7 @@ class Home extends Component {
                     {this.renderPosts()}
                 </div>
                 <div className="groups">
-                    {loggedIn ? <GroupList groups={userGroups} history={history} /> : null}
+                    {loggedIn ? <GroupList groups={this.getUserGroups()} history={history} /> : null}
                 </div>
             </div>
         )
@@ -38,6 +42,7 @@ class Home extends Component {
 const mapStateToProps = state => {
     return {
         posts: state.posts,
+        groups: state.groups
         // user
     }
 }

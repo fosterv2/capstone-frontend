@@ -5,7 +5,20 @@
 export default function postReducer(state = [], action) {
     switch (action.type) {
         case "ADD_POST":
-            return [...state, action.payload]
+            return [action.payload, ...state]
+
+        case "UPDATE_POST":
+        case "DELETE_POST":
+            return state.map(post => post.id === action.payload.id ? action.payload : post)
+
+        case "LIKE_POST":
+            return
+
+        // case "_POST":
+        //     return
+
+        // case "_POST":
+        //     return
 
         case "ADD_POSTS":
             return action.posts

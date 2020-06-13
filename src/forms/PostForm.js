@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { connect } from "react-redux";
+import { addPost } from "../redux"
 
-const PostForm = ({ handleSubmit, history }) => {
+const PostForm = props => {
     const [content, setContent] = useState("")
     const [img_url, setImage] = useState("")
 
@@ -14,14 +16,19 @@ const PostForm = ({ handleSubmit, history }) => {
 
     const submitPost = event => {
         event.preventDefault()
-        handleSubmit(event)
-        history.push('/')
+        const body = {
+            content: event.target.content.value,
+            post_img: event.target.img_url.value,
+            user_id: props.user.id
+        }
+        props.addPost(body)
+        props.history.push('/')
     }
 
     return (
         <div className="post form">
             <h1>Make a New Post</h1>
-            {/* Add group? or put in group page? */}
+            {/* group drop-down for "tags" */}
             <form onSubmit={submitPost}>
                 <textarea
                     name="content"
@@ -41,4 +48,10 @@ const PostForm = ({ handleSubmit, history }) => {
     )
 }
 
-export default PostForm
+const mapDispatchToProps = dispatch => {
+    return {
+        addPost: (body) => dispatch(addPost(body))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(PostForm)
