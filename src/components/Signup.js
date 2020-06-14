@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useFormInput } from '../services/FormHook'
+import { connect } from "react-redux";
+import { setUser } from "../redux";
 
 const URL = "http://localhost:3000/users"
 
@@ -29,9 +31,10 @@ const Signup = props => {
             })
         })
         .then(resp => resp.json())
-        .then(user => {
-            if (!user.error) {
-                props.onLogin(user)
+        .then(response => {
+            if (!response.error) {
+                props.setUser(response.user)
+                localStorage.setItem("token", response.jwt)
                 props.history.push('/')
             } else {
                 setError(true)
@@ -219,4 +222,10 @@ const Signup = props => {
 //     }    
 // }
 
-export default Signup
+const mapDispatchToProps = dispatch => {
+    return {
+        setUser: data => dispatch(setUser(data))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Signup)

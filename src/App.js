@@ -13,15 +13,9 @@ import Group from './containers/Group'
 import AllGroups from './containers/AllGroups'
 import PostForm from './forms/PostForm'
 import { connect } from "react-redux";
-import { fetchPosts, fetchGroups } from "./redux";
+import { fetchPosts, fetchGroups, setUser, clearUser } from "./redux";
 
 class App extends Component {
-  state = {
-    currentUser: {
-      id: "",
-    },
-    loggedIn: !!localStorage.getItem("token")
-  }
 
   componentDidMount() {
     this.props.fetchPosts()
@@ -36,28 +30,13 @@ class App extends Component {
         }
       })
       .then(resp => resp.json())
-      .then(user => {
-        this.setState({
-          currentUser: user.user
-        })
-      })
+      .then(response => this.props.setUser(response.user))
     }
-  }
-  
-  onLogin = response => {
-    localStorage.setItem("token", response.jwt)
-    this.setState({
-      currentUser: response.user,
-      loggedIn: true
-    })
   }
 
   onSignOut = () => {
     localStorage.removeItem("token")
-    this.setState({
-      loggedIn: false,
-      currentUser: {}
-    })
+    this.props.clearUser()
   }
 
   handleUpdateUser = userInfo => {
@@ -95,7 +74,7 @@ class App extends Component {
   }
 
   render() {
-    const { loggedIn, currentUser } = this.state
+    const { loggedIn, currentUser } = this.props
     return (
       <Router>
         <Navbar loggedIn={loggedIn} signOut={this.onSignOut} />
@@ -103,29 +82,18 @@ class App extends Component {
           <Route exact path="/"
             render={props => <Home
               {...props}
-              user={currentUser}
-              loggedIn={loggedIn}
+              // user={this.props.currentUser}
+              // loggedIn={loggedIn}
               handleLike={this.handleLike}
             />}
           />
-          <Route exact path="/login" render={props => <Login {...props} onLogin={this.onLogin} />} />
-          <Route exact path="/signup" render={props => <Signup {...props} onLogin={this.onLogin} />} />
+          <Route exact path="/login" render={props => <Login {...props} />} />
+          <Route exact path="/signup" render={props => <Signup {...props} />} />
           <Route exact path="/about" component={About} />
           <Route exact path="/posts/:post_id"
-            render={props => <Post
-              {...props}
-              user={currentUser}
-              posts={this.props.posts}
-              handleLike={this.handleLike}
-              loggedIn={loggedIn}
-            />}
+            render={props => <Post {...props} handleLike={this.handleLike} />}
           />
-          <Route exact path="/new_post"
-            render={props => <PostForm
-              {...props}
-              user={currentUser}
-            />}
-          />
+          <Route exact path="/new_post" render={props => <PostForm {...props} user={currentUser} />} />
           <Route exact path="/update_user"
             render={props => <ProfileForm
               {...props}
@@ -133,15 +101,7 @@ class App extends Component {
               handleUpdateProfile={this.handleUpdateUser}
             />}
           />
-          <Route exact path="/groups"
-            render={props => <AllGroups
-              {...props}
-              user={currentUser}
-              handleSubmit={this.handleGroupSubmit}
-              handleJoinClick={this.handleJoinGroup}
-              handleLeaveClick={this.handleLeaveGroup}
-            />}
-          />
+          <Route exact path="/groups"  render={props => <AllGroups {...props} />} />
           <Route exact path="/groups/:group_id"
             render={props => <Group
               {...props}
@@ -173,15 +133,18 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     // posts: state.posts,
-    groups: state.groups
-    // user
+    groups: state.groups,
+    currentUser: state.currentUser,
+    loggedIn: !!state.currentUser.id
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchPosts: () => dispatch(fetchPosts()),
-    fetchGroups: () => dispatch(fetchGroups())
+    fetchGroups: () => dispatch(fetchGroups()),
+    setUser: data => dispatch(setUser(data)),
+    clearUser: () => dispatch(clearUser())
   }
 }
 

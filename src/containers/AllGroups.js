@@ -76,7 +76,8 @@ class AllGroups extends Component {
 
 const mapStateToProps = state => {
     return {
-        groups: state.groups
+        groups: state.groups,
+        user: state.currentUser
     }
 }
 

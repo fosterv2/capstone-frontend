@@ -42,8 +42,9 @@ class Home extends Component {
 const mapStateToProps = state => {
     return {
         posts: state.posts,
-        groups: state.groups
-        // user
+        groups: state.groups,
+        user: state.currentUser,
+        loggedIn: !!state.currentUser.id
     }
 }
 

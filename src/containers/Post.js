@@ -4,6 +4,7 @@ import CommentCard from '../components/CommentCard'
 import CommentForm from '../forms/CommentForm'
 import Profile from '../containers/Profile'
 // import { fetchLike } from '../services/FormHook'
+import { connect } from "react-redux";
 import '../css/Post.css'
 
 class Post extends Component {
@@ -49,7 +50,7 @@ class Post extends Component {
         this.setState({ addClicked: false })
         const body = {
             content: event.target.content.value,
-            post_id: this.state.post.id,
+            post_id: this.getPost().id,
             user_id: this.props.user.id
         }
         fetch("http://localhost:3000/comments", {
@@ -70,7 +71,7 @@ class Post extends Component {
         return (
             <div className="posting">
                 <div className="post info">
-                <Profile user={this.getPost().user} />
+                {!!this.getPost() ? <Profile user={this.getPost().user} /> : null}
                 {!!this.getPost() ?
                 <PostCard
                     postInfo={this.getPost()}
@@ -91,4 +92,12 @@ class Post extends Component {
     }
 }
 
-export default Post
+const mapStateToProps = state => {
+    return {
+        posts: state.posts,
+        user: state.currentUser,
+        loggedIn: !!state.currentUser.id
+    }
+}
+
+export default connect(mapStateToProps)(Post)
