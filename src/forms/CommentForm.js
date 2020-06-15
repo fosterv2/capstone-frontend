@@ -11,6 +11,7 @@ const CommentForm = ({ handleSubmit, handleBack }) => {
         <div className="toggle form">
             <p className="back" onClick={handleBack}>Back</p>
             <form onSubmit={handleSubmit}>
+                <label>Comment Content</label><br/>
                 <textarea
                     name="content"
                     placeholder="Enter comment content"

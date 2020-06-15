@@ -29,20 +29,23 @@ const PostForm = props => {
     return (
         <div className="post form">
             <h1>Make a New Post</h1>
-            {/* group drop-down for "tags" */}
             <form onSubmit={submitPost}>
+                <label>Post Content</label><br/>
                 <textarea
                     name="content"
                     placeholder="Enter post content"
                     value={content}
                     onChange={handleContentChange}
-                />
+                /><br />
+                <label>Image URL</label><br/>
                 <input
                     name="img_url"
                     placeholder="Enter an image url"
                     value={img_url}
                     onChange={handleImgChange}
                 /><br />
+                {/* <label>Choose Group(s)</label><br/> */}
+                {/* group check-boxes for "tags" */}
                 <button type="submit">Submit</button>
             </form>
         </div>
@@ -51,7 +54,8 @@ const PostForm = props => {
 
 const mapStateToProps = state => {
     return {
-        user: state.currentUser
+        user: state.currentUser,
+        groups: state.groups
     }
 }
 

@@ -16,12 +16,14 @@ const GroupForm = ({ handleSubmit, handleBack }) => {
         <div className="toggle form">
             <p className="back" onClick={handleBack}>Back</p>
             <form onSubmit={handleSubmit}>
+                <label>Group Name</label><br/>
                 <input
                     name="name"
                     placeholder="Enter group name"
                     value={name}
                     onChange={handleChangeName}
-                />
+                /><br />
+                <label>Description</label><br/>
                 <textarea
                     name="description"
                     placeholder="Enter group description"
