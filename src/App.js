@@ -39,24 +39,24 @@ class App extends Component {
     this.props.clearUser()
   }
   
-  handleLike = (id, likes) => {
-    fetch(`http://localhost:3000/posts/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        likes: likes + 1
-      })
-    })
-    .then(resp => resp.json())
-    .then(postReturn => {
-      this.setState(prev => {
-        return { posts: prev.posts.map(post => post.id === id ? postReturn : post) }
-      })
-    })
-  }
+  // handleLike = (id, likes) => {
+  //   fetch(`http://localhost:3000/posts/${id}`, {
+  //     method: "PATCH",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       likes: likes + 1
+  //     })
+  //   })
+  //   .then(resp => resp.json())
+  //   .then(postReturn => {
+  //     this.setState(prev => {
+  //       return { posts: prev.posts.map(post => post.id === id ? postReturn : post) }
+  //     })
+  //   })
+  // }
 
   render() {
     const { loggedIn } = this.props

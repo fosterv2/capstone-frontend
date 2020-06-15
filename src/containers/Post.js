@@ -3,8 +3,8 @@ import PostCard from '../components/PostCard'
 import CommentCard from '../components/CommentCard'
 import CommentForm from '../forms/CommentForm'
 import Profile from '../containers/Profile'
-// import { fetchLike } from '../services/FormHook'
-import { connect } from "react-redux";
+import { connect } from "react-redux"
+import { likePost } from "../redux"
 import '../css/Post.css'
 
 class Post extends Component {
@@ -68,6 +68,7 @@ class Post extends Component {
     }
 
     render() {
+        const { user, likePost, loggedIn } = this.props
         return (
             <div className="posting">
                 <div className="post info">
@@ -75,10 +76,10 @@ class Post extends Component {
                 {!!this.getPost() ?
                 <PostCard
                     postInfo={this.getPost()}
-                    handleClickLike={this.props.handleLike}
+                    handleClickLike={likePost}
                     onHandleClick={this.handleClick}
-                    user={this.props.user}
-                    loggedIn={this.props.loggedIn}
+                    user={user}
+                    loggedIn={loggedIn}
                     // onDelete={this.handleDelete}
                 />
                 : null}
@@ -100,4 +101,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Post)
+const mapDispatchToProps = dispatch => {
+    return {
+        likePost: (user_id, post_id) => dispatch(likePost(user_id, post_id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post)

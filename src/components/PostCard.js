@@ -2,8 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const PostCard = props => {
-    const { user, created_at, post_img, content, id } = props.postInfo
-    const likes = 0
+    const { user, created_at, post_img, content, id, likes } = props.postInfo
+    // const likes = 0
 
     const parseDate = date => {
         const dateArr = date.split("-")
@@ -18,17 +18,17 @@ const PostCard = props => {
     }
 
     const renderDiv = () => {
-        const { loggedIn, onHandleClick } = props
+        const { loggedIn, onHandleClick, handleClickLike } = props
         if (loggedIn && onHandleClick) {
             return <div className="post buttons">
-                <p>{likes} Likes <span onClick={() => props.handleClickLike(id, likes)}>+</span></p>
-                <p><span onClick={props.onHandleClick}>Add Comment</span></p>
+                <p>{likes.length} Likes <span onClick={() => handleClickLike(props.user.id, id)}>+</span></p>
+                <p><span onClick={onHandleClick}>Add Comment</span></p>
             </div>
         } else if (onHandleClick) {
             return null
         } else if (loggedIn) {
             return <div className="post buttons">
-                <p>{likes} Likes <span onClick={() => props.handleClickLike(id, likes)}>+</span></p>
+                <p>{likes.length} Likes <span onClick={() => handleClickLike(props.user.id, id)}>+</span></p>
                 <p><Link to={`/posts/${id}`}>Comments</Link></p>
             </div>
         } else {
@@ -49,18 +49,6 @@ const PostCard = props => {
             <div className="content">
                 <p>{content}</p>
             </div>
-            {/* <div className="post buttons">
-                {
-                    props.loggedIn ?
-                    <p>{likes} Likes <span onClick={() => props.handleClickLike(id, likes)}>+</span></p>
-                    : null
-                }
-                <p>{
-                    props.onHandleClick ? 
-                    <span onClick={props.onHandleClick}>Add Comment</span>
-                    : <Link to={`/posts/${id}`}>Comments</Link>
-                }</p>
-            </div> */}
             {renderDiv()}
             {user.id === props.user.id ?
             <div className="post buttons">

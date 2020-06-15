@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PostCard from '../components/PostCard'
 import Profile from './Profile'
 import GroupList from './GroupList'
-import { connect } from "react-redux";
+import { connect } from "react-redux"
+import { likePost } from "../redux"
 import '../css/Home.css'
 
 class Home extends Component {
@@ -11,10 +12,14 @@ class Home extends Component {
     }
 
     renderPosts = () => {
-        const { posts, handleLike, user, loggedIn } = this.props
-        return posts.map(post => {
-            return <PostCard key={post.id} handleClickLike={handleLike} postInfo={post} user={user} loggedIn={loggedIn} />
-        })
+        const { posts, likePost, user, loggedIn } = this.props
+        return posts.map(post => <PostCard
+            key={post.id}
+            handleClickLike={likePost}
+            postInfo={post}
+            user={user}
+            loggedIn={loggedIn}
+        />)
     }
 
     getUserGroups = () => {
@@ -48,4 +53,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Home)
+const mapDispatchToProps = dispatch => {
+    return {
+        likePost: (user_id, post_id) => dispatch(likePost(user_id, post_id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

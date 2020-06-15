@@ -11,7 +11,7 @@ const Profile = ({ user, history }) => {
                 <p>Breed: {breed}</p>
                 <p>Owner: {owner_name}</p>
                 {/* add followers */}
-                <button onClick={() => history.push("/update_user")}>Update Profile</button>
+                {history ? <button onClick={() => history.push("/update_user")}>Update Profile</button> : null}
             </div>
         </div>
     )

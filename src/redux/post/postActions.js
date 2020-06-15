@@ -63,7 +63,7 @@ export function updatePost(post) {
 export function deletePost(post) {
     return (dispatch) => {
         fetch(`http://localhost:3000/posts/${post.id}`, {
-        method: "PATCH",
+        method: "DELETE",
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json"
@@ -82,9 +82,26 @@ export function deletePost(post) {
     }
 }
 
-export function likePost(id) {
-    return {
-        type: "LIKE_POST",
-        payload: id
+export function likePost(user_id, post_id) {
+    // console.log(user_id, post_id)
+    return (dispatch) => {
+        fetch(`http://localhost:3000/posts/${post_id}/likes`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify({
+            user_id: user_id
+        })
+        })
+        .then(resp => resp.json())
+        .then(post => dispatch({
+            type: "LIKE_POST",
+            payload: post
+        }))
     }
+    // {
+    //     type: "LIKE_POST"
+    // }
 }

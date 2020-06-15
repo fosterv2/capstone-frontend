@@ -47,7 +47,7 @@ class AllGroups extends Component {
         const body = {
             name: event.target.name.value,
             description: event.target.description.value,
-            user_id: this.props.user.id
+            creator_id: this.props.user.id
         }
         this.props.addGroup(body)
         this.setState({ addClicked: false })
