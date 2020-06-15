@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from "react-redux";
+import { updateUser } from "../redux";
 
 class ProfileForm extends Component {
     state = {
@@ -21,7 +23,7 @@ class ProfileForm extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-        this.props.handleUpdateProfile(this.state.fields)
+        this.props.updateUser(this.state.fields)
         this.props.history.push("/")
     }
     
@@ -79,4 +81,16 @@ class ProfileForm extends Component {
     }
 }
 
-export default ProfileForm
+const mapStateToProps = state => {
+    return {
+        user: state.currentUser
+    }
+}
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+        updateUser: (data) => dispatch(updateUser(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileForm)

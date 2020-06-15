@@ -36,10 +36,6 @@ export function addPost(body) {
             payload: post
         }))
     }
-    // return {
-    //     type: "ADD_POST",
-    //     payload: post
-    // }
 }
 
 export function updatePost(post) {
@@ -62,10 +58,6 @@ export function updatePost(post) {
             payload: post
         }))
     }
-    // return {
-    //     type: "UPDATE_POST",
-    //     payload: post
-    // }
 }
 
 export function deletePost(post) {
@@ -88,10 +80,6 @@ export function deletePost(post) {
             payload: post
         }))
     }
-    // return {
-    //     type: "DELETE_POST",
-    //     payload: id
-    // }
 }
 
 export function likePost(id) {

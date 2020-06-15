@@ -38,21 +38,6 @@ class App extends Component {
     localStorage.removeItem("token")
     this.props.clearUser()
   }
-
-  handleUpdateUser = userInfo => {
-    fetch(`http://localhost:3000/users/${userInfo.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify(userInfo)
-    })
-    .then(resp => resp.json())
-    .then(user => {
-      this.setState({ currentUser: user })
-    })
-  }
   
   handleLike = (id, likes) => {
     fetch(`http://localhost:3000/posts/${id}`, {
@@ -74,40 +59,26 @@ class App extends Component {
   }
 
   render() {
-    const { loggedIn, currentUser } = this.props
+    const { loggedIn } = this.props
     return (
       <Router>
         <Navbar loggedIn={loggedIn} signOut={this.onSignOut} />
         <div className="main">
-          <Route exact path="/"
-            render={props => <Home
-              {...props}
-              // user={this.props.currentUser}
-              // loggedIn={loggedIn}
-              handleLike={this.handleLike}
-            />}
-          />
+          <Route exact path="/" render={props => <Home {...props}
+              // handleLike={this.handleLike}
+          />} />
           <Route exact path="/login" render={props => <Login {...props} />} />
           <Route exact path="/signup" render={props => <Signup {...props} />} />
           <Route exact path="/about" component={About} />
-          <Route exact path="/posts/:post_id"
-            render={props => <Post {...props} handleLike={this.handleLike} />}
-          />
-          <Route exact path="/new_post" render={props => <PostForm {...props} user={currentUser} />} />
-          <Route exact path="/update_user"
-            render={props => <ProfileForm
-              {...props}
-              user={currentUser}
-              handleUpdateProfile={this.handleUpdateUser}
-            />}
-          />
+          <Route exact path="/posts/:post_id" render={props => <Post {...props}
+              // handleLike={this.handleLike}
+          />} />
+          <Route exact path="/new_post" render={props => <PostForm {...props} />} />
+          <Route exact path="/update_user" render={props => <ProfileForm {...props} />} />
           <Route exact path="/groups"  render={props => <AllGroups {...props} />} />
-          <Route exact path="/groups/:group_id"
-            render={props => <Group
-              {...props}
-              handleClickLeave={this.handleLeaveGroup}
-            />}
-          />
+          <Route exact path="/groups/:group_id" render={props => <Group {...props}
+              // handleClickLeave={this.handleLeaveGroup}
+          />} />
         </div>
       </Router>
     )

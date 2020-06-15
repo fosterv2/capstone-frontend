@@ -6,7 +6,7 @@ export default function userReducer(state = {}, action) {
         case "CLEAR_USER":
             return {}
 
-        // case "_USER":
+        // case "UPDATE_USER":
         //     return
 
         // case "_USER":

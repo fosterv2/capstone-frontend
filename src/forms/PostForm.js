@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import AuthHOC from '../services/AuthHOC'
 import { connect } from "react-redux";
 import { addPost } from "../redux"
 
@@ -48,10 +49,16 @@ const PostForm = props => {
     )
 }
 
+const mapStateToProps = state => {
+    return {
+        user: state.currentUser
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         addPost: (body) => dispatch(addPost(body))
     }
 }
 
-export default connect(null, mapDispatchToProps)(PostForm)
+export default connect(mapStateToProps, mapDispatchToProps)(AuthHOC(PostForm))
