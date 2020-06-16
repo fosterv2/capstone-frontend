@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import AuthHOC from '../services/AuthHOC'
-import { connect } from "react-redux";
-import { addPost } from "../redux"
 
 const PostForm = props => {
-    const [content, setContent] = useState("")
-    const [img_url, setImage] = useState("")
+    const [content, setContent] = useState(props.postInfo.content)
+    const [img_url, setImage] = useState(props.postInfo.post_img)
 
     const handleContentChange = event => {
         setContent(event.target.value)
@@ -18,17 +16,22 @@ const PostForm = props => {
     const submitPost = event => {
         event.preventDefault()
         const body = {
+            id: props.postInfo.id,
             content: event.target.content.value,
             post_img: event.target.img_url.value,
             user_id: props.user.id
         }
-        props.addPost(body)
-        props.history.push('/')
+        props.handleSubmit(body)
+        if (props.history){
+            props.history.push('/')
+        } else {
+            props.handleBack()
+        }
     }
 
     return (
-        <div className="post form">
-            <h1>Make a New Post</h1>
+        <div className="toggle form">
+            {props.handleBack ? <p onClick={props.handleBack}>Back</p> : <h1>Make a New Post</h1>}
             <form onSubmit={submitPost}>
                 <label>Post Content</label><br/>
                 <textarea
@@ -52,17 +55,4 @@ const PostForm = props => {
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        user: state.currentUser,
-        groups: state.groups
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        addPost: (body) => dispatch(addPost(body))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AuthHOC(PostForm))
+export default AuthHOC(PostForm)

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 const PostCard = props => {
     const { user, created_at, post_img, content, id, likes } = props.postInfo
-    // const likes = 0
 
     const parseDate = date => {
         const dateArr = date.split("-")
@@ -50,10 +49,10 @@ const PostCard = props => {
                 <p>{content}</p>
             </div>
             {renderDiv()}
-            {user.id === props.user.id ?
+            {user.id === props.user.id && props.handleUpdate ?
             <div className="post buttons">
-                <p onClick={() => console.log("Need an update")}>Update Comment</p>
-                <p onClick={() => console.log("Need a delete")}>Delete Comment</p>
+                <p onClick={props.handleUpdate}>Update Post</p>
+                <p onClick={() => props.handleDelete(id)}>Delete Post</p>
             </div>
             : null}
         </div>

@@ -46,11 +46,7 @@ export function updatePost(post) {
             "Content-Type": "application/json",
             Accept: "application/json"
         },
-        body: JSON.stringify({
-            content: "This post has been deleted",
-            post_url: "",
-            deleted: true
-        })
+        body: JSON.stringify(post)
         })
         .then(resp => resp.json())
         .then(post => dispatch({
@@ -60,9 +56,9 @@ export function updatePost(post) {
     }
 }
 
-export function deletePost(post) {
+export function deletePost(post_id) {
     return (dispatch) => {
-        fetch(`http://localhost:3000/posts/${post.id}`, {
+        fetch(`http://localhost:3000/posts/${post_id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -83,7 +79,6 @@ export function deletePost(post) {
 }
 
 export function likePost(user_id, post_id) {
-    // console.log(user_id, post_id)
     return (dispatch) => {
         fetch(`http://localhost:3000/posts/${post_id}/likes`, {
         method: "PATCH",
@@ -101,7 +96,4 @@ export function likePost(user_id, post_id) {
             payload: post
         }))
     }
-    // {
-    //     type: "LIKE_POST"
-    // }
 }

@@ -13,7 +13,7 @@ import Group from './containers/Group'
 import AllGroups from './containers/AllGroups'
 import PostForm from './forms/PostForm'
 import { connect } from "react-redux";
-import { fetchPosts, fetchGroups, setUser, clearUser } from "./redux";
+import { fetchPosts, fetchGroups, setUser, clearUser, addPost } from "./redux";
 
 class App extends Component {
 
@@ -39,46 +39,31 @@ class App extends Component {
     this.props.clearUser()
   }
   
-  // handleLike = (id, likes) => {
-  //   fetch(`http://localhost:3000/posts/${id}`, {
-  //     method: "PATCH",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       likes: likes + 1
-  //     })
-  //   })
-  //   .then(resp => resp.json())
-  //   .then(postReturn => {
-  //     this.setState(prev => {
-  //       return { posts: prev.posts.map(post => post.id === id ? postReturn : post) }
-  //     })
-  //   })
-  // }
+  
 
   render() {
-    const { loggedIn } = this.props
+    const { groups, currentUser, loggedIn, addPost } = this.props
     return (
       <Router>
         <Navbar loggedIn={loggedIn} signOut={this.onSignOut} />
         <div className="main">
-          <Route exact path="/" render={props => <Home {...props}
-              // handleLike={this.handleLike}
-          />} />
+          <Route exact path="/" render={props => <Home {...props} />} />
           <Route exact path="/login" render={props => <Login {...props} />} />
           <Route exact path="/signup" render={props => <Signup {...props} />} />
           <Route exact path="/about" component={About} />
-          <Route exact path="/posts/:post_id" render={props => <Post {...props}
-              // handleLike={this.handleLike}
-          />} />
-          <Route exact path="/new_post" render={props => <PostForm {...props} />} />
+          <Route exact path="/posts/:post_id" render={props => <Post {...props} />} />
+          <Route exact path="/new_post"
+            render={props => <PostForm
+                {...props}
+                user={currentUser}
+                groups={groups}
+                handleSubmit={addPost}
+                postInfo={{content: "", post_img: ""}}
+            />}
+          />
           <Route exact path="/update_user" render={props => <ProfileForm {...props} />} />
           <Route exact path="/groups"  render={props => <AllGroups {...props} />} />
-          <Route exact path="/groups/:group_id" render={props => <Group {...props}
-              // handleClickLeave={this.handleLeaveGroup}
-          />} />
+          <Route exact path="/groups/:group_id" render={props => <Group {...props} />} />
         </div>
       </Router>
     )
@@ -115,7 +100,8 @@ const mapDispatchToProps = dispatch => {
     fetchPosts: () => dispatch(fetchPosts()),
     fetchGroups: () => dispatch(fetchGroups()),
     setUser: data => dispatch(setUser(data)),
-    clearUser: () => dispatch(clearUser())
+    clearUser: () => dispatch(clearUser()),
+    addPost: (body) => dispatch(addPost(body))
   }
 }
 

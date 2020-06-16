@@ -3,14 +3,17 @@ import PostCard from '../components/PostCard'
 import CommentCard from '../components/CommentCard'
 import CommentForm from '../forms/CommentForm'
 import Profile from '../containers/Profile'
+import PostForm from '../forms/PostForm'
 import { connect } from "react-redux"
-import { likePost } from "../redux"
+import { updatePost, deletePost, likePost } from "../redux"
 import '../css/Post.css'
 
 class Post extends Component {
     state = {
         comments: [],
-        addClicked: false
+        addComment: false,
+        updatePost: false,
+        // updateComment: false
     }
 
     componentDidMount() {
@@ -39,9 +42,15 @@ class Post extends Component {
         return this.state.comments.map(comment => <CommentCard key={comment.id} commentInfo={comment} />)
     }
 
-    handleClick = () => {
+    toggleAddComment = () => {
         this.setState(prev => {
-            return { addClicked: !prev.addClicked }
+            return { addComment: !prev.addComment }
+        })
+    }
+
+    toggleUpdatePost = () => {
+        this.setState(prev => {
+            return { updatePost: !prev.updatePost }
         })
     }
 
@@ -67,8 +76,13 @@ class Post extends Component {
         }))
     }
 
+    handlePostDelete = post_id => {
+        this.props.deletePost(post_id)
+        this.props.history.push('/')
+    }
+
     render() {
-        const { user, likePost, loggedIn } = this.props
+        const { user, loggedIn, likePost, updatePost } = this.props
         return (
             <div className="posting">
                 <div className="post info">
@@ -77,15 +91,19 @@ class Post extends Component {
                 <PostCard
                     postInfo={this.getPost()}
                     handleClickLike={likePost}
-                    onHandleClick={this.handleClick}
+                    onHandleClick={this.toggleAddComment}
                     user={user}
                     loggedIn={loggedIn}
-                    // onDelete={this.handleDelete}
+                    handleUpdate={this.toggleUpdatePost}
+                    handleDelete={this.handlePostDelete}
                 />
                 : null}
                 </div>
-                {this.state.addClicked ? 
-                <CommentForm handleSubmit={this.handleSubmit} handleBack={this.handleClick} />
+                {this.state.updatePost ?
+                <PostForm handleSubmit={updatePost} handleBack={this.toggleUpdatePost} postInfo={this.getPost()} user={user} />
+                : null}
+                {this.state.addComment ? 
+                <CommentForm handleSubmit={this.handleSubmit} handleBack={this.toggleAddComment} />
                 : null }
                 {this.renderComments()}
             </div>
@@ -103,6 +121,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        updatePost: post => dispatch(updatePost(post)),
+        deletePost: post_id => dispatch(deletePost(post_id)),
         likePost: (user_id, post_id) => dispatch(likePost(user_id, post_id))
     }
 }

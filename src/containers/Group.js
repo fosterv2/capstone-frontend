@@ -1,55 +1,16 @@
 import React, { Component } from 'react'
 import PostCard from '../components/PostCard'
 import AuthHOC from '../services/AuthHOC'
-// import { fetchLike } from '../services/FormHook'
 import Profile from '../containers/Profile'
 import { connect } from "react-redux"
 import { leaveGroup, likePost } from "../redux"
 
 class Group extends Component {
-    // state = {
-    //     group: {
-    //         name: "",
-    //         description: "",
-    //         users: []
-    //     },
-    //     posts: []
-    // }
-
-    // componentDidMount() {
-    //     const group_id = this.props.match.params.group_id
-    //     fetch(`http://localhost:3000/groups/${group_id}`)
-    //     .then(resp => resp.json())
-    //     .then(group => this.setState({ group }))
-    //     fetch(`http://localhost:3000/posts/group/${group_id}`)
-    //     .then(resp => resp.json())
-    //     .then(posts => {
-    //         posts.sort((a, b) => {
-    //             if (a.created_at > b.created_at) {
-    //                 return -1
-    //             } else if (a.created_at < b.created_at) {
-    //                 return 1
-    //             } else {
-    //                 return 0
-    //             }
-    //         })
-    //         this.setState({ posts })
-    //     })
-    // }
 
     getGroup = () => {
         // eslint-disable-next-line
         return this.props.groups.find(group => group.id == this.props.match.params.group_id)
     }
-
-    // handleLike = (id, likes) => {
-    //     fetchLike(id, likes)
-    //     .then(postReturn => {
-    //         this.setState(prev => {
-    //             return { posts: prev.posts.map(post => post.id === id ? postReturn : post) }
-    //         })
-    //     })
-    // }
 
     listUsers = () => {
         return this.getGroup().users.map(user => <Profile key={user.id} user={user} />)
@@ -57,7 +18,8 @@ class Group extends Component {
 
     renderPosts = () => {
         const { posts, likePost, user, loggedIn } = this.props
-        const groupPosts = posts.filter(post => {
+        const showPosts = posts.filter(post => !post.deleted)
+        const groupPosts = showPosts.filter(post => {
             return !!post.groups.find(group => group.id === this.getGroup().id)
         })
         return groupPosts.map(post => <PostCard

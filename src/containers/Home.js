@@ -13,7 +13,8 @@ class Home extends Component {
 
     renderPosts = () => {
         const { posts, likePost, user, loggedIn } = this.props
-        return posts.map(post => <PostCard
+        const showPosts = posts.filter(post => !post.deleted)
+        return showPosts.map(post => <PostCard
             key={post.id}
             handleClickLike={likePost}
             postInfo={post}
