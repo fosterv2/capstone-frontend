@@ -4,6 +4,7 @@ import AuthHOC from '../services/AuthHOC'
 const PostForm = props => {
     const [content, setContent] = useState(props.postInfo.content)
     const [img_url, setImage] = useState(props.postInfo.post_img)
+    const [postGroups, setPostGroups] = useState(props.postInfo.groups.map(group => group.name))
 
     const handleContentChange = event => {
         setContent(event.target.value)
@@ -13,12 +14,24 @@ const PostForm = props => {
         setImage(event.target.value)
     }
 
+    const handleGroupsChange = event => {
+        const groupName = event.target.value
+        // const checkedGroup = getUserGroups().find(group => group.name === groupName)
+        if (!postGroups.includes(groupName)) {
+            setPostGroups([...postGroups, groupName])
+        } else {
+            setPostGroups(postGroups.filter(group => group !== groupName))
+        }
+    }
+
     const submitPost = event => {
         event.preventDefault()
+        const groupIds = props.groups.filter(group => postGroups.includes(group.name)).map(group => group.id)
         const body = {
             id: props.postInfo.id,
-            content: event.target.content.value,
-            post_img: event.target.img_url.value,
+            content: content,
+            post_img: img_url,
+            group_ids: groupIds,
             user_id: props.user.id
         }
         props.handleSubmit(body)
@@ -34,16 +47,18 @@ const PostForm = props => {
     }
 
     const renderGroups = () => {
-        const groupNames = props.postInfo.groups.map(group => group.name)
+        // const groupNames = postGroups.map(group => group.name)
         return getUserGroups().map(group => {
             const htmlName = group.name.toLowerCase().split(" ").join("-")
-            return <div>
+            return <div key={group.id}>
                 <label htmlFor={htmlName}>{group.name}</label>
                 <input
                     id={htmlName}
                     type="checkbox"
                     value={group.name}
-                    checked={groupNames.includes(group.name)}
+                    // name="group"
+                    checked={postGroups.includes(group.name)}
+                    onChange={handleGroupsChange}
                 />
             </div>
         })

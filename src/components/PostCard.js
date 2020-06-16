@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const PostCard = props => {
-    const { user, created_at, post_img, content, id, likes } = props.postInfo
+    const { user, created_at, post_img, content, id, likes, groups } = props.postInfo
 
     const parseDate = date => {
         const dateArr = date.split("-")
@@ -33,9 +33,28 @@ const PostCard = props => {
         } else {
             return <div className="post buttons">
                 <p></p>
-                <Link to={`/posts/${id}`}>Comments</Link>
+                <p><Link to={`/posts/${id}`}>Comments</Link></p>
             </div>
         }
+    }
+
+    // const renderDiv = () => {
+    //     const { loggedIn, onHandleClick } = props
+    //     if (loggedIn && onHandleClick) {
+    //         return <div className="post buttons">
+    //             <p><span onClick={onHandleClick}>Add Comment</span></p>
+    //         </div>
+    //     } else if (onHandleClick) {
+    //         return null
+    //     } else {
+    //         return <div className="post buttons">
+    //             <p><Link to={`/posts/${id}`}>Comments</Link></p>
+    //         </div>
+    //     }
+    // }
+
+    const listGroups = () => {
+        return groups.map(group => <span key={group.id}> @{group.name} </span>)
     }
 
     return (
@@ -49,8 +68,13 @@ const PostCard = props => {
                 <p>{content}</p>
             </div>
             {renderDiv()}
-            {user.id === props.user.id && props.handleUpdate ?
+            {props.loggedIn ?
             <div className="post buttons">
+                <p>Groups:{listGroups()}</p>
+            </div>
+            : null}
+            {user.id === props.user.id && props.handleUpdate ?
+            <div className="post user">
                 <p onClick={props.handleUpdate}>Update Post</p>
                 <p onClick={() => props.handleDelete(id)}>Delete Post</p>
             </div>

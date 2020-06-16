@@ -10,17 +10,3 @@ export function useFormInput(initialState) {
         onChange: handleChange
     }
 }
-
-export function fetchLike(id, likes) {
-    return fetch(`http://localhost:3000/posts/${id}`, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-        },
-        body: JSON.stringify({
-            likes: likes + 1
-        })
-    })
-    .then(resp => resp.json())
-}
