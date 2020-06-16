@@ -58,7 +58,7 @@ class App extends Component {
                 user={currentUser}
                 groups={groups}
                 handleSubmit={addPost}
-                postInfo={{content: "", post_img: ""}}
+                postInfo={{content: "", post_img: "", groups: []}}
             />}
           />
           <Route exact path="/update_user" render={props => <ProfileForm {...props} />} />

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 const AuthHoc = WrappedComconent => {
     return class AuthHOC extends Component {
@@ -16,11 +16,11 @@ const AuthHoc = WrappedComconent => {
 
         render() {
             return (
-                <div>
+                <Fragment>
                     {this.state.authorized ? 
                     <WrappedComconent {...this.props} /> :
                     null}
-                </div>
+                </Fragment>
             )
         }
     }

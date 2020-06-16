@@ -29,6 +29,26 @@ const PostForm = props => {
         }
     }
 
+    const getUserGroups = () => {
+        return props.groups.filter(group => !!group.users.find(user => user.id === props.user.id))
+    }
+
+    const renderGroups = () => {
+        const groupNames = props.postInfo.groups.map(group => group.name)
+        return getUserGroups().map(group => {
+            const htmlName = group.name.toLowerCase().split(" ").join("-")
+            return <div>
+                <label htmlFor={htmlName}>{group.name}</label>
+                <input
+                    id={htmlName}
+                    type="checkbox"
+                    value={group.name}
+                    checked={groupNames.includes(group.name)}
+                />
+            </div>
+        })
+    }
+
     return (
         <div className="toggle form">
             {props.handleBack ? <p onClick={props.handleBack}>Back</p> : <h1>Make a New Post</h1>}
@@ -47,8 +67,8 @@ const PostForm = props => {
                     value={img_url}
                     onChange={handleImgChange}
                 /><br />
-                {/* <label>Choose Group(s)</label><br/> */}
-                {/* group check-boxes for "tags" */}
+                <p>Choose Group(s)</p>
+                <div className="checkboxes">{renderGroups()}</div>
                 <button type="submit">Submit</button>
             </form>
         </div>

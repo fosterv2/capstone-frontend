@@ -42,3 +42,9 @@
     display: flex;
     justify-content: space-around;
 }
+
+.checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}

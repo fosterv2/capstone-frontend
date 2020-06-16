@@ -24,7 +24,7 @@ class Home extends Component {
     }
 
     getUserGroups = () => {
-      return this.props.groups.filter(group => !!group.users.find(user => user.id === this.props.user.id))
+        return this.props.groups.filter(group => !!group.users.find(user => user.id === this.props.user.id))
     }
 
     render() {

@@ -82,7 +82,7 @@ class Post extends Component {
     }
 
     render() {
-        const { user, loggedIn, likePost, updatePost } = this.props
+        const { user, loggedIn, groups, likePost, updatePost } = this.props
         return (
             <div className="posting">
                 <div className="post info">
@@ -100,7 +100,13 @@ class Post extends Component {
                 : null}
                 </div>
                 {this.state.updatePost ?
-                <PostForm handleSubmit={updatePost} handleBack={this.toggleUpdatePost} postInfo={this.getPost()} user={user} />
+                <PostForm
+                    handleSubmit={updatePost}
+                    handleBack={this.toggleUpdatePost}
+                    postInfo={this.getPost()}
+                    user={user}
+                    groups={groups}
+                />
                 : null}
                 {this.state.addComment ? 
                 <CommentForm handleSubmit={this.handleSubmit} handleBack={this.toggleAddComment} />
@@ -114,6 +120,7 @@ class Post extends Component {
 const mapStateToProps = state => {
     return {
         posts: state.posts,
+        groups: state.groups,
         user: state.currentUser,
         loggedIn: !!state.currentUser.id
     }
