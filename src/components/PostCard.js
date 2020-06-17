@@ -17,17 +17,23 @@ const PostCard = props => {
     }
 
     const renderDiv = () => {
+        let likePg
+        if (likes.find(like => like.user_id === props.user.id)) {
+            likePg = <p>{likes.length} Likes <span style={{ color: "red" }}>♥</span></p>
+        } else {
+            likePg = <p>{likes.length} Likes <span onClick={() => handleClickLike(props.user.id, id)}>♡</span></p>
+        }
         const { loggedIn, onHandleClick, handleClickLike } = props
         if (loggedIn && onHandleClick) {
             return <div className="post buttons">
-                <p>{likes.length} Likes <span onClick={() => handleClickLike(props.user.id, id)}>+</span></p>
+                {likePg}
                 <p><span onClick={onHandleClick}>Add Comment</span></p>
             </div>
         } else if (onHandleClick) {
             return null
         } else if (loggedIn) {
             return <div className="post buttons">
-                <p>{likes.length} Likes <span onClick={() => handleClickLike(props.user.id, id)}>+</span></p>
+                {likePg}
                 <p><Link to={`/posts/${id}`}>Comments</Link></p>
             </div>
         } else {
