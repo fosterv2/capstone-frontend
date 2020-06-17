@@ -3,9 +3,13 @@ import PostCard from '../components/PostCard'
 import AuthHOC from '../services/AuthHOC'
 import Profile from '../containers/Profile'
 import { connect } from "react-redux"
-import { leaveGroup, likePost } from "../redux"
+import { updateGroup, leaveGroup, likePost } from "../redux"
+import GroupForm from '../forms/GroupForm'
 
 class Group extends Component {
+    state = {
+        updateGroup: false
+    }
 
     getGroup = () => {
         // eslint-disable-next-line
@@ -36,6 +40,24 @@ class Group extends Component {
         this.props.history.push('/groups')
     }
 
+    handleClickBack = () => {
+        this.setState(prev => {
+            return { updateGroup: !prev.updateGroup }
+        })
+    }
+
+    handleUpdate = event => {
+        event.preventDefault()
+        const body = {
+            id: this.getGroup().id,
+            name: event.target.name.value,
+            description: event.target.description.value,
+            creator_id: this.props.user.id
+        }
+        this.props.updateGroup(body)
+        this.setState({ addClicked: false })
+    }
+
     render() {
         const group = this.getGroup()
         return (
@@ -46,8 +68,11 @@ class Group extends Component {
                 <button onClick={() => this.props.history.push('/groups')}>See all Groups</button>
                 {// eslint-disable-next-line
                 group.creator_id == this.props.user.id ?
-                <button onClick={() => console.log("Need a group edit")}>Edit Group</button>
+                <button onClick={this.handleClickBack}>Edit Group</button>
                 : <button onClick={this.handleClickLeave}>Leave Group</button>}
+                {this.state.updateGroup ?
+                <GroupForm groupInfo={this.getGroup()} handleSubmit={this.handleUpdate} handleBack={this.handleClickBack} />
+                : null}
                 <h2>Group Members:</h2>
                 <div className="users">{this.listUsers()}</div>
                 {this.renderPosts()}
@@ -69,7 +94,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         leaveGroup: (user_id, group_id) => dispatch(leaveGroup(user_id, group_id)),
-        likePost: (user_id, post_id) => dispatch(likePost(user_id, post_id))
+        likePost: (user_id, post_id) => dispatch(likePost(user_id, post_id)),
+        updateGroup: group => dispatch(updateGroup(group))
     }
 }
 

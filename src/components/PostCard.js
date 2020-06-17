@@ -18,7 +18,9 @@ const PostCard = props => {
 
     const renderDiv = () => {
         let likePg
-        if (likes.find(like => like.user_id === props.user.id)) {
+        if (user.id === props.user.id) {
+            likePg = <p>{likes.length} Likes <span style={{ color: "red" }}>♡</span></p>
+        } else if (likes.find(like => like.user_id === props.user.id)) {
             likePg = <p>{likes.length} Likes <span style={{ color: "red" }}>♥</span></p>
         } else {
             likePg = <p>{likes.length} Likes <span onClick={() => handleClickLike(props.user.id, id)}>♡</span></p>

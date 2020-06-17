@@ -9,7 +9,7 @@ const CommentForm = ({ handleSubmit, handleBack }) => {
 
     return (
         <div className="toggle form">
-            <p className="back" onClick={handleBack}>Back</p>
+            <p className="back" onClick={handleBack}>X</p>
             <form onSubmit={handleSubmit}>
                 <label>Comment Content</label><br/>
                 <textarea

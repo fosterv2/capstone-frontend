@@ -57,11 +57,9 @@ class AllGroups extends Component {
         return (
             <div className="main groups">
                 <div className="all groups">
-                    {
-                        this.state.addClicked ?
-                        <GroupForm handleSubmit={this.handleSubmit} handleBack={this.handleClickButton} />
-                        : <button onClick={this.handleClickButton}>Start a new Group</button>
-                    }
+                    {this.state.addClicked ?
+                    <GroupForm groupInfo={{name: "", description: ""}} handleSubmit={this.handleSubmit} handleBack={this.handleClickButton} />
+                    : <button onClick={this.handleClickButton}>Start a new Group</button>}
                     <h3>Click on a group for info</h3>
                     {this.renderGroups()}
                 </div>

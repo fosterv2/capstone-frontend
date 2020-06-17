@@ -66,3 +66,8 @@
 .all.groups .toggle.form {
     width: 100%;
 }
+
+.group .toggle.form {
+    margin-left: 25%;
+    margin-top: 10px;
+}

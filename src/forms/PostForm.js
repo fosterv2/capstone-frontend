@@ -66,7 +66,7 @@ const PostForm = props => {
 
     return (
         <div className="toggle form">
-            {props.handleBack ? <p onClick={props.handleBack}>Back</p> : <h1>Make a New Post</h1>}
+            {props.handleBack ? <p onClick={props.handleBack}>X</p> : <h1>Make a New Post</h1>}
             <form onSubmit={submitPost}>
                 <label>Post Content</label><br/>
                 <textarea

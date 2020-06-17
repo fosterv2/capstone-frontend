@@ -24,6 +24,24 @@ export function addGroup(body) {
     }
 }
 
+export function updateGroup(group) {
+    return (dispatch) => {
+        fetch(`http://localhost:3000/groups/${group.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify(group)
+        })
+        .then(resp => resp.json())
+        .then(group => dispatch({
+            type: "UPDATE_GROUP",
+            payload: group
+        }))
+    }
+}
+
 export function joinGroup(user_id, group_id) {
     return (dispatch) => {
         fetch(`http://localhost:3000/users/${user_id}/groups`, {
