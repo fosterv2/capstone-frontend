@@ -5,7 +5,7 @@ import CommentForm from '../forms/CommentForm'
 import Profile from '../containers/Profile'
 import PostForm from '../forms/PostForm'
 import { connect } from "react-redux"
-import { updatePost, deletePost, likePost } from "../redux"
+import { updatePost, deletePost, likePost, addFollow, removeFollow } from "../redux"
 import '../css/Post.css'
 
 class Post extends Component {
@@ -82,11 +82,13 @@ class Post extends Component {
     }
 
     render() {
-        const { user, loggedIn, groups, likePost, updatePost } = this.props
+        const { user, loggedIn, groups, likePost, updatePost, addFollow, removeFollow } = this.props
         return (
             <div className="posting">
                 <div className="post info">
-                {!!this.getPost() ? <Profile user={this.getPost().user} /> : null}
+                {!!this.getPost() ?
+                <Profile user={this.getPost().user} currentUser={user} handleFollow={addFollow} handleUnfollow={removeFollow} />
+                : null}
                 {!!this.getPost() ?
                 <PostCard
                     postInfo={this.getPost()}
@@ -130,7 +132,9 @@ const mapDispatchToProps = dispatch => {
     return {
         updatePost: post => dispatch(updatePost(post)),
         deletePost: post_id => dispatch(deletePost(post_id)),
-        likePost: (user_id, post_id) => dispatch(likePost(user_id, post_id))
+        likePost: (user_id, post_id) => dispatch(likePost(user_id, post_id)),
+        addFollow: (user_id, follow_id) => dispatch(addFollow(user_id, follow_id)),
+        removeFollow: (user_id, follow_id) => dispatch(removeFollow(user_id, follow_id))
     }
 }
 

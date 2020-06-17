@@ -28,3 +28,39 @@ export function updateUser(user) {
         }))
     }
 }
+
+export function addFollow(user_id, follow_id) {
+    return (dispatch) => {
+        fetch(`http://localhost:3000/users/${user_id}/follows`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify({ follow_id })
+        })
+        .then(resp => resp.json())
+        .then(user => dispatch({
+            type: "SET_USER",
+            payload: user
+        }))
+    }
+}
+
+export function removeFollow(user_id, follow_id) {
+    return (dispatch) => {
+        fetch(`http://localhost:3000/users/${user_id}/follows`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify({ follow_id })
+        })
+        .then(resp => resp.json())
+        .then(user => dispatch({
+            type: "SET_USER",
+            payload: user
+        }))
+    }
+}

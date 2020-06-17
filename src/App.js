@@ -38,8 +38,6 @@ class App extends Component {
     localStorage.removeItem("token")
     this.props.clearUser()
   }
-  
-  
 
   render() {
     const { groups, currentUser, loggedIn, addPost } = this.props
@@ -70,25 +68,8 @@ class App extends Component {
   }
 }
 
-// import React, { Component } from "react";
-// import { connect } from "react-redux";
-// import { fetchPosts } from "./redux";
-
-// class App extends Component {
-//   componentDidMount() {
-//     this.props.fetchPosts()
-//   }
-
-//   render() {
-//     return (
-//       <div>There are {this.props.posts.length} posts</div>
-//     )
-//   }
-// }
-
 const mapStateToProps = state => {
   return {
-    // posts: state.posts,
     groups: state.groups,
     currentUser: state.currentUser,
     loggedIn: !!state.currentUser.id

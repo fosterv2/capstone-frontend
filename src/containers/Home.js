@@ -32,7 +32,7 @@ class Home extends Component {
         return (
             <div className="home">
                 <div className="profile">
-                    {loggedIn ? <Profile user={user} history={history} /> : null}
+                    {loggedIn ? <Profile user={user} history={history} currentUser={user} /> : null}
                 </div>
                 <div className="posts">
                     {this.renderPosts()}

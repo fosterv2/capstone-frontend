@@ -3,7 +3,7 @@ import PostCard from '../components/PostCard'
 import AuthHOC from '../services/AuthHOC'
 import Profile from '../containers/Profile'
 import { connect } from "react-redux"
-import { updateGroup, leaveGroup, likePost } from "../redux"
+import { updateGroup, leaveGroup, likePost, addFollow, removeFollow } from "../redux"
 import GroupForm from '../forms/GroupForm'
 
 class Group extends Component {
@@ -17,7 +17,10 @@ class Group extends Component {
     }
 
     listUsers = () => {
-        return this.getGroup().users.map(user => <Profile key={user.id} user={user} />)
+        const { addFollow, removeFollow } = this.props
+        return this.getGroup().users.map(user => {
+            return <Profile key={user.id} user={user} currentUser={this.props.user} handleFollow={addFollow} handleUnfollow={removeFollow} />
+        })
     }
 
     renderPosts = () => {
@@ -95,7 +98,9 @@ const mapDispatchToProps = dispatch => {
     return {
         leaveGroup: (user_id, group_id) => dispatch(leaveGroup(user_id, group_id)),
         likePost: (user_id, post_id) => dispatch(likePost(user_id, post_id)),
-        updateGroup: group => dispatch(updateGroup(group))
+        updateGroup: group => dispatch(updateGroup(group)),
+        addFollow: (user_id, follow_id) => dispatch(addFollow(user_id, follow_id)),
+        removeFollow: (user_id, follow_id) => dispatch(removeFollow(user_id, follow_id))
     }
 }
 
