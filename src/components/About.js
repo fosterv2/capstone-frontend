@@ -3,7 +3,7 @@ import React from 'react'
 const About = () => {
     return(
         <div className="about">
-            <h1>Cool Name Here</h1>
+            <h1>CatSpace</h1>
             <p>
                 An app for cats to connect with each other and share their thoughts and feelings
                 (because cats do have feelings).
