@@ -60,7 +60,7 @@ class AllGroups extends Component {
             <Fragment>
             {this.state.addClicked ?
             <GroupForm groupInfo={{name: "", description: ""}} handleSubmit={this.handleSubmit} handleBack={this.handleClickButton} />
-            : <button style={{ marginLeft: "5%", marginTop: "4%" }} onClick={this.handleClickButton}>Start a new Group</button>}
+            : <button style={{ marginLeft: "5%", marginTop: "3%" }} onClick={this.handleClickButton}>Start a new Group</button>}
             <div className="main groups">
                 <div className="all groups">
                     <h3>Your Groups</h3>

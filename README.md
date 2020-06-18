@@ -39,5 +39,5 @@ npm start
 
 ### In the App
 
-Before login/ signup, you can see the "about", "login/signup", and "home" pages with all of the posts for the site at "home". Once logged in, a user can see all posts, make a post, see info about all groups and join any group, like any other user's posts once and comment on them.
+Before login/ signup, you can see the "about", "login/signup", and "home" pages with all of the posts for the site at "home". Once logged in, a user can see their profile and groups along with posts on the home page. They can make posts with a picture and content and tag it to groups and edit or delete them. They can also make comments on any posts and like any other user's posts once. A user can also join and leave groups and see all posts associated with the groups they have joined. A user can also follow any other user through their profile on the group page or the page of one of their posts.
 
