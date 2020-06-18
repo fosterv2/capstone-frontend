@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import GroupForm from '../forms/GroupForm'
 import { Link } from 'react-router-dom'
 import AuthHOC from '../services/AuthHOC'
@@ -14,23 +14,25 @@ class AllGroups extends Component {
         }
     }
 
-    renderGroups = () => {
-        return this.props.groups.map(group => {
+    renderJoinedGroups = () => {
+        const { groups, user, leaveGroup } = this.props
+        return groups.filter(group => group.users.find(groupUser => groupUser.id === user.id)).map(group => {
             return <div className="join" key={group.id}>
-            {
-                !group.users.find(user => user.id === this.props.user.id) ?
-                <p><span onClick={() => this.handleClickName(group)}>{group.name}</span><br />
-                <button onClick={() => this.props.joinGroup(this.props.user.id, group.id)}>Join</button></p>
-                : <p><Link to={`/groups/${group.id}`}>{group.name}</Link><br />
-                <button onClick={() => this.props.leaveGroup(this.props.user.id, group.id)}>Leave</button></p>
-            }
+                <p><Link to={`/groups/${group.id}`}>{group.name}</Link><br />
+                <button onClick={() => leaveGroup(user.id, group.id)}>Leave</button></p>
             </div>
         })
     }
 
-    // handleJoinClick = group_id => {
-    //     this.props.j
-    // }
+    renderOtherGroups = () => {
+        const { groups, user, joinGroup } = this.props
+        return groups.filter(group => !group.users.find(groupUser => groupUser.id === user.id)).map(group => {
+            return <div className="join" key={group.id}>
+                <p><span onClick={() => this.handleClickName(group)}>{group.name}</span><br />
+                <button onClick={() => joinGroup(user.id, group.id)}>Join</button></p>
+            </div>
+        })
+    }
 
     handleClickButton = () => {
         this.setState(prev => {
@@ -55,19 +57,25 @@ class AllGroups extends Component {
 
     render() {
         return (
+            <Fragment>
+            {this.state.addClicked ?
+            <GroupForm groupInfo={{name: "", description: ""}} handleSubmit={this.handleSubmit} handleBack={this.handleClickButton} />
+            : <button style={{ marginLeft: "5%", marginTop: "4%" }} onClick={this.handleClickButton}>Start a new Group</button>}
             <div className="main groups">
                 <div className="all groups">
-                    {this.state.addClicked ?
-                    <GroupForm groupInfo={{name: "", description: ""}} handleSubmit={this.handleSubmit} handleBack={this.handleClickButton} />
-                    : <button onClick={this.handleClickButton}>Start a new Group</button>}
-                    <h3>Click on a group for info</h3>
-                    {this.renderGroups()}
+                    <h3>Your Groups</h3>
+                    {this.renderJoinedGroups()}
+                </div>
+                <div className="all groups">
+                    <h3>Other Groups (click name for info)</h3>
+                    {this.renderOtherGroups()}
                 </div>
                 <div className="single group">
                     <h2>{this.state.currentGroup.name}</h2>
                     <p>{this.state.currentGroup.description}</p>
                 </div>
             </div>
+            </Fragment>
         )
     }
 }

@@ -21,8 +21,8 @@
 
 .all.groups {
     padding-top: 20px;
-    padding-left: 10%;
-    width: 50%;
+    padding-left: 5%;
+    width: 25%;
 }
 
 .all.groups button {
@@ -65,11 +65,7 @@
 
 .single.group {
     width: 50%;
-    padding-right: 18%;
-}
-
-.all.groups .toggle.form {
-    width: 100%;
+    padding-top: 10%;
 }
 
 .group .toggle.form {
