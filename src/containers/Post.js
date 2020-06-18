@@ -39,7 +39,9 @@ class Post extends Component {
     }
 
     renderComments = () => {
-        return this.state.comments.map(comment => <CommentCard key={comment.id} commentInfo={comment} />)
+        return this.state.comments.length === 0 ?
+        <p>(This post has no comments)</p>
+        : this.state.comments.map(comment => <CommentCard key={comment.id} commentInfo={comment} />)
     }
 
     toggleAddComment = () => {
@@ -72,7 +74,10 @@ class Post extends Component {
         })
         .then(resp => resp.json())
         .then(comment => this.setState(prev => {
-            return { comments: [comment, ...prev.comments] }
+            return {
+                comments: [comment, ...prev.comments],
+                addComment: false
+            }
         }))
     }
 

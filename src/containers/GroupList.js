@@ -4,7 +4,9 @@ import '../css/Groups.css'
 
 const GroupList = ({ groups, history }) => {
     const renderGroups = () => {
-        return groups.map(group => <li key={group.id}><Link to={`/groups/${group.id}`}>{group.name}</Link></li>)
+        return groups.length === 0 ?
+        <p>(No groups joined)</p>
+        : groups.map(group => <li key={group.id}><Link to={`/groups/${group.id}`}>{group.name}</Link></li>)
     }
 
     return (

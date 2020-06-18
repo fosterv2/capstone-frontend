@@ -51,9 +51,13 @@
     padding-top: 0;
 }
 
+.group .users .profile.card img {
+    max-height: 200px;
+}
+
 .group .post.card {
-    width: 75%;
-    margin-left: 12%;
+    width: 50%;
+    margin-left: 25%;
 }
 
 .main.groups {
@@ -66,6 +70,7 @@
 .single.group {
     width: 50%;
     padding-top: 10%;
+    padding-right: 10%;
 }
 
 .group .toggle.form {

@@ -19,7 +19,7 @@ const Profile = ({ user, history, currentUser, handleFollow, handleUnfollow }) =
                 <p>Breed: {breed}</p>
                 <p>Owner: {owner_name}</p>
                 {currentUser.id === user.id ?
-                <p>{currentUser.followers.length} followers</p>
+                currentUser.followers.length === 1 ? <p>1 follower</p> : <p>{currentUser.followers.length} followers</p>
                 : !currentUser.followees.find(followee => id === followee.id) ?
                 <button onClick={() => handleFollow(currentUser.id, user.id)}>Follow</button>
                 : <button onClick={() => handleUnfollow(currentUser.id, user.id)}>Unfollow</button>}

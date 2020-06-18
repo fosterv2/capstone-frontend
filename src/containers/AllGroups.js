@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import GroupForm from '../forms/GroupForm'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import AuthHOC from '../services/AuthHOC'
 import { connect } from "react-redux";
-import { addGroup, joinGroup, leaveGroup } from "../redux"
+import { addGroup, joinGroup } from "../redux"
 
 class AllGroups extends Component {
     state = {
@@ -15,11 +15,14 @@ class AllGroups extends Component {
     }
 
     renderJoinedGroups = () => {
-        const { groups, user, leaveGroup } = this.props
-        return groups.filter(group => group.users.find(groupUser => groupUser.id === user.id)).map(group => {
+        const { groups, user, history } = this.props
+        const joinedGroups = groups.filter(group => group.users.find(groupUser => groupUser.id === user.id))
+        return joinedGroups.length === 0 ?
+        <p>(No groups joined)</p>
+        : joinedGroups.map(group => {
             return <div className="join" key={group.id}>
-                <p><Link to={`/groups/${group.id}`}>{group.name}</Link><br />
-                <button onClick={() => leaveGroup(user.id, group.id)}>Leave</button></p>
+                <p><span onClick={() => this.handleClickName(group)}>{group.name}</span><br />
+                <button onClick={() => history.push(`/groups/${group.id}`)}>Group Page</button></p>
             </div>
         })
     }
@@ -29,7 +32,7 @@ class AllGroups extends Component {
         return groups.filter(group => !group.users.find(groupUser => groupUser.id === user.id)).map(group => {
             return <div className="join" key={group.id}>
                 <p><span onClick={() => this.handleClickName(group)}>{group.name}</span><br />
-                <button onClick={() => joinGroup(user.id, group.id)}>Join</button></p>
+                <button onClick={() => joinGroup(user.id, group.id)}>Join Group</button></p>
             </div>
         })
     }
@@ -63,11 +66,12 @@ class AllGroups extends Component {
             : <button style={{ marginLeft: "5%", marginTop: "3%" }} onClick={this.handleClickButton}>Start a new Group</button>}
             <div className="main groups">
                 <div className="all groups">
-                    <h3>Your Groups</h3>
+                    <h2>Your Groups</h2>
                     {this.renderJoinedGroups()}
                 </div>
                 <div className="all groups">
-                    <h3>Other Groups (click name for info)</h3>
+                    <h3>Other Groups</h3>
+                    <h4>Click name for info</h4>
                     {this.renderOtherGroups()}
                 </div>
                 <div className="single group">
@@ -90,8 +94,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addGroup: (body) => dispatch(addGroup(body)),
-        joinGroup: (user_id, group_id) => dispatch(joinGroup(user_id, group_id)),
-        leaveGroup: (user_id, group_id) => dispatch(leaveGroup(user_id, group_id))
+        joinGroup: (user_id, group_id) => dispatch(joinGroup(user_id, group_id))
     }
 }
 
