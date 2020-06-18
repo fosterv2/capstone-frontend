@@ -21,7 +21,7 @@
 
 .all.groups {
     padding-top: 20px;
-    padding-left: 50px;
+    padding-left: 10%;
     width: 50%;
 }
 
@@ -33,6 +33,11 @@
 .group {
     text-align: center;
     margin: 10px;
+}
+
+.group button {
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .group .users {
@@ -60,7 +65,7 @@
 
 .single.group {
     width: 50%;
-    padding-right: 15%;
+    padding-right: 18%;
 }
 
 .all.groups .toggle.form {

@@ -4,9 +4,9 @@
     align-items: center;
 }
 
-.posting .post.card {
-    width: 60%;
-}
+/* .post.info {
+    width: 100%;
+} */
 
 .comment.card {
     width: 50%;
@@ -23,7 +23,7 @@
     border: 2px solid #007bff;
     border-radius: 10px;
     padding-bottom: 10px;
-    padding-left: 15px;
+    padding-left: 5%;
 }
 
 .post.form {
@@ -40,7 +40,13 @@
 
 .posting .post.info {
     display: flex;
-    justify-content: space-around;
+    /* justify-content: space-around; */
+    width: 100%;
+}
+
+.posting .post.info .post.card {
+    width: 60%;
+    margin-top: 35px;
 }
 
 .checkboxes {

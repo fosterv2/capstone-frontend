@@ -86,9 +86,9 @@ class Post extends Component {
         return (
             <div className="posting">
                 <div className="post info">
-                {!!this.getPost() ?
+                {!!this.getPost() && user.id ?
                 <Profile user={this.getPost().user} currentUser={user} handleFollow={addFollow} handleUnfollow={removeFollow} />
-                : null}
+                : <div className="profile card"></div>}
                 {!!this.getPost() ?
                 <PostCard
                     postInfo={this.getPost()}
