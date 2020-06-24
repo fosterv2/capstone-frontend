@@ -15,7 +15,7 @@ import PostForm from './forms/PostForm'
 import { connect } from "react-redux";
 import { fetchPosts, fetchGroups, setUser, clearUser, addPost } from "./redux";
 
-const BASE_URL = "http://localhost:3000/"
+const BASE_URL = "https://cat-space-backend.herokuapp.com/"
 
 class App extends Component {
 

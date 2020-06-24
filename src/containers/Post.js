@@ -8,7 +8,7 @@ import { connect } from "react-redux"
 import { updatePost, deletePost, likePost, addFollow, removeFollow } from "../redux"
 import '../css/Post.css'
 
-const BASE_URL = "http://localhost:3000/"
+const BASE_URL = "https://cat-space-backend.herokuapp.com/"
 
 class Post extends Component {
     state = {

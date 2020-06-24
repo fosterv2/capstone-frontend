@@ -4,7 +4,7 @@ import { useFormInput } from '../services/FormHook'
 import { connect } from "react-redux";
 import { setUser } from "../redux";
 
-const URL = "http://localhost:3000/users"
+const URL = "https://cat-space-backend.herokuapp.com/users"
 
 const Signup = props => {
     const username = useFormInput("")
