@@ -15,6 +15,8 @@ import PostForm from './forms/PostForm'
 import { connect } from "react-redux";
 import { fetchPosts, fetchGroups, setUser, clearUser, addPost } from "./redux";
 
+const BASE_URL = "http://localhost:3000/"
+
 class App extends Component {
 
   componentDidMount() {
@@ -22,7 +24,7 @@ class App extends Component {
     this.props.fetchGroups()
     const token = localStorage.getItem("token")
     if (token) {
-      fetch("http://localhost:3000/auth", {
+      fetch(`${BASE_URL}auth`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",

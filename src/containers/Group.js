@@ -58,7 +58,7 @@ class Group extends Component {
             creator_id: this.props.user.id
         }
         this.props.updateGroup(body)
-        this.setState({ addClicked: false })
+        this.setState({ updateGroup: false })
     }
 
     render() {

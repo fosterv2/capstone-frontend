@@ -1,6 +1,8 @@
+const BASE_URL = "http://localhost:3000/"
+
 export function fetchGroups() {
     return (dispatch) => {
-        fetch("http://localhost:3000/groups")
+        fetch(`${BASE_URL}groups`)
         .then(resp => resp.json())
         .then(groups => dispatch({ type: "ADD_GROUPS", groups }))
     }
@@ -8,7 +10,7 @@ export function fetchGroups() {
 
 export function addGroup(body) {
     return (dispatch) => {
-        fetch("http://localhost:3000/groups", {
+        fetch(`${BASE_URL}groups`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -26,7 +28,7 @@ export function addGroup(body) {
 
 export function updateGroup(group) {
     return (dispatch) => {
-        fetch(`http://localhost:3000/groups/${group.id}`, {
+        fetch(`${BASE_URL}groups/${group.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -44,7 +46,7 @@ export function updateGroup(group) {
 
 export function joinGroup(user_id, group_id) {
     return (dispatch) => {
-        fetch(`http://localhost:3000/users/${user_id}/groups`, {
+        fetch(`${BASE_URL}users/${user_id}/groups`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -64,7 +66,7 @@ export function joinGroup(user_id, group_id) {
 
 export function leaveGroup(user_id, group_id) {
     return (dispatch) => {
-        fetch(`http://localhost:3000/users/${user_id}/groups`, {
+        fetch(`${BASE_URL}users/${user_id}/groups`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

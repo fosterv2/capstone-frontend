@@ -1,6 +1,8 @@
+const BASE_URL = "http://localhost:3000/"
+
 export function fetchPosts() {
     return (dispatch) => {
-        fetch("http://localhost:3000/posts")
+        fetch(`${BASE_URL}posts`)
         .then(resp => resp.json())
         .then(posts => {
             posts.sort((a, b) => {
@@ -22,7 +24,7 @@ export function fetchPosts() {
 
 export function addPost(body) {
     return (dispatch) => {
-        fetch("http://localhost:3000/posts", {
+        fetch(`${BASE_URL}posts`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -40,7 +42,7 @@ export function addPost(body) {
 
 export function updatePost(post) {
     return (dispatch) => {
-        fetch(`http://localhost:3000/posts/${post.id}`, {
+        fetch(`${BASE_URL}posts/${post.id}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -58,7 +60,7 @@ export function updatePost(post) {
 
 export function deletePost(post_id) {
     return (dispatch) => {
-        fetch(`http://localhost:3000/posts/${post_id}`, {
+        fetch(`${BASE_URL}posts/${post_id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
@@ -80,7 +82,7 @@ export function deletePost(post_id) {
 
 export function likePost(user_id, post_id) {
     return (dispatch) => {
-        fetch(`http://localhost:3000/posts/${post_id}/likes`, {
+        fetch(`${BASE_URL}posts/${post_id}/likes`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",

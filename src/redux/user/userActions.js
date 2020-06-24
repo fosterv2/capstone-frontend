@@ -1,3 +1,5 @@
+const BASE_URL = "http://localhost:3000/"
+
 export function setUser(user) {
     return {
         type: "SET_USER",
@@ -13,7 +15,7 @@ export function clearUser() {
 
 export function updateUser(user) {
     return dispatch => {
-        fetch(`http://localhost:3000/users/${user.id}`, {
+        fetch(`${BASE_URL}users/${user.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -31,7 +33,7 @@ export function updateUser(user) {
 
 export function addFollow(user_id, follow_id) {
     return (dispatch) => {
-        fetch(`http://localhost:3000/users/${user_id}/follows`, {
+        fetch(`${BASE_URL}users/${user_id}/follows`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -49,7 +51,7 @@ export function addFollow(user_id, follow_id) {
 
 export function removeFollow(user_id, follow_id) {
     return (dispatch) => {
-        fetch(`http://localhost:3000/users/${user_id}/follows`, {
+        fetch(`${BASE_URL}users/${user_id}/follows`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

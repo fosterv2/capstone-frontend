@@ -8,6 +8,8 @@ import { connect } from "react-redux"
 import { updatePost, deletePost, likePost, addFollow, removeFollow } from "../redux"
 import '../css/Post.css'
 
+const BASE_URL = "http://localhost:3000/"
+
 class Post extends Component {
     state = {
         comments: [],
@@ -17,7 +19,7 @@ class Post extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:3000/comments/${this.props.match.params.post_id}`)
+        fetch(`${BASE_URL}comments/${this.props.match.params.post_id}`)
         .then(resp => resp.json())
         .then(comments => {
             comments.sort((a, b) => {
@@ -64,7 +66,7 @@ class Post extends Component {
             post_id: this.getPost().id,
             user_id: this.props.user.id
         }
-        fetch("http://localhost:3000/comments", {
+        fetch(`${BASE_URL}comments`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
