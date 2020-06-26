@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PostCard from '../components/PostCard'
 import AuthHOC from '../services/AuthHOC'
 import Profile from '../containers/Profile'
@@ -19,7 +19,12 @@ class Group extends Component {
     listUsers = () => {
         const { addFollow, removeFollow } = this.props
         return this.getGroup().users.map(user => {
-            return <Profile key={user.id} user={user} currentUser={this.props.user} handleFollow={addFollow} handleUnfollow={removeFollow} />
+            return <Profile key={user.id}
+                user={user}
+                currentUser={this.props.user}
+                handleFollow={addFollow}
+                handleUnfollow={removeFollow}
+            />
         })
     }
 
@@ -64,7 +69,8 @@ class Group extends Component {
     render() {
         const group = this.getGroup()
         return (
-            <div>{group ? 
+            <Fragment>
+            {group ? 
             <div className="group">
                 <h1>{group.name}</h1>
                 <p>{group.description}</p>
@@ -74,13 +80,14 @@ class Group extends Component {
                 <button onClick={this.handleClickBack}>Edit Group</button>
                 : <button onClick={this.handleClickLeave}>Leave Group</button>}
                 {this.state.updateGroup ?
-                <GroupForm groupInfo={this.getGroup()} handleSubmit={this.handleUpdate} handleBack={this.handleClickBack} />
+                <GroupForm groupInfo={group} handleSubmit={this.handleUpdate} handleBack={this.handleClickBack} />
                 : null}
                 <h2>Group Members:</h2>
                 <div className="users">{this.listUsers()}</div>
                 {this.renderPosts()}
             </div>
-             : null}</div>
+             : null}
+             </Fragment>
         )
     }
 }

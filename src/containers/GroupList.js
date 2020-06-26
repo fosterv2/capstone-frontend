@@ -10,7 +10,7 @@ const GroupList = ({ groups, history }) => {
     }
 
     return (
-        <div className="user groups">
+        <div className="user grouplist">
             <h3>Your Groups</h3>
             <ul>{renderGroups()}</ul>
             <button onClick={() => history.push('/groups')}>Seach more groups</button>

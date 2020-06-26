@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PostCard from '../components/PostCard'
 import Profile from './Profile'
 import GroupList from './GroupList'
+import FolloweeList from './FolloweeList'
 import { connect } from "react-redux"
 import { likePost } from "../redux"
 import '../css/Home.css'
@@ -39,6 +40,7 @@ class Home extends Component {
                 </div>
                 <div className="groups">
                     {loggedIn ? <GroupList groups={this.getUserGroups()} history={history} /> : null}
+                    {loggedIn ? <FolloweeList followees={user.followees} /> : null}
                 </div>
             </div>
         )

@@ -3,20 +3,32 @@
     right: 0;
 }
 
-.user.groups {
-    width: 25%;
+.user.grouplist {
+    width: 100%;
     text-align: center;
     padding-top: 60px;
 }
 
-.user.groups ul {
+.user.grouplist ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-.user.groups button {
+.user.grouplist button {
     margin-top: 15px;
+}
+
+.user.follow {
+    width: 100%;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.user.follow ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .all.groups {

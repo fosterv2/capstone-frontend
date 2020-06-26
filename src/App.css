@@ -59,3 +59,20 @@ button {
   padding-left: 50px;
   padding-right: 50px;
 }
+
+.followee {
+  display: flex;
+}
+
+.followee .pro.file {
+  width: 30%;
+}
+
+.followee .profile.card {
+  width: 100%;
+}
+
+.followee .post.list {
+  width: 50%;
+  margin-left: 5%;
+}
