@@ -1,6 +1,7 @@
 .home .groups {
     position: fixed;
     right: 0;
+    text-align: center;
 }
 
 .user.grouplist {

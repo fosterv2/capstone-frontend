@@ -38,10 +38,12 @@ class Home extends Component {
                 <div className="posts">
                     {this.renderPosts()}
                 </div>
-                <div className="groups">
-                    {loggedIn ? <GroupList groups={this.getUserGroups()} history={history} /> : null}
-                    {loggedIn ? <FolloweeList followees={user.followees} /> : null}
-                </div>
+                {loggedIn ? <div className="groups">
+                    <GroupList groups={this.getUserGroups()} history={history} />
+                    <FolloweeList followees={user.followees} />
+                    <button onClick={() => history.push('/liked_posts')}
+                        style={{marginTop: "50px"}}>See Liked Posts</button>
+                </div> : null}
             </div>
         )
     }

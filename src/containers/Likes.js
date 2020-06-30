@@ -12,8 +12,8 @@ class Likes extends Component {
 
     render() {
         return (
-            <div>
-                <h2>Liked Posts</h2>
+            <div className="liked">
+                <h1>Liked Posts</h1>
                 {this.renderPosts()}
             </div>
         )

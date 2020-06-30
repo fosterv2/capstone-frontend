@@ -76,3 +76,12 @@ button {
   width: 50%;
   margin-left: 5%;
 }
+
+.liked {
+  text-align: center;
+}
+
+.liked .post.card {
+  width: 50%;
+  margin-left: 24.5%;
+}
