@@ -74,7 +74,7 @@ button {
 
 .followee .post.list {
   width: 50%;
-  margin-left: 5%;
+  margin-left: 35%;
 }
 
 .liked {
@@ -84,4 +84,14 @@ button {
 .liked .post.card {
   width: 50%;
   margin-left: 24.5%;
+}
+
+.followee .pro.file {
+  position: fixed;
+  left: 0;
+}
+
+.followee .profile.card {
+  padding-top: 0;
+  margin-top: -40px;
 }

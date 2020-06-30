@@ -32,6 +32,7 @@ class Followee extends Component {
     render() {
         return (
             <Fragment>
+            <h1 style={{ textAlign: "center" }}>Followed User</h1>
             {this.props.loggedIn ? 
             <div className="followee">
                 <div className="pro file">
