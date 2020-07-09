@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { Fragment} from 'react'
 import { Link } from 'react-router-dom'
 
 const PostCard = props => {
-    const { user, created_at, post_img, content, id, likes, groups } = props.postInfo
+    const { user, created_at, post_img, content, id, likes, groups, deleted } = props.postInfo
 
     const parseDate = date => {
         const dateArr = date.split("-")
@@ -66,7 +66,9 @@ const PostCard = props => {
     }
 
     return (
-        <div className="post card">
+        <Fragment>{deleted ?
+        <div className="post card"><p style={{marginTop: "20%"}}><em>This post has been deleted</em></p></div>
+        : <div className="post card">
             <div className="heading">
                 <p><strong>Posted By:</strong> {user.username}</p>
                 <p><strong>Posted On:</strong> {parseDate(created_at)}</p>
@@ -87,7 +89,7 @@ const PostCard = props => {
                 <p onClick={() => props.handleDelete(id)}>Delete Post</p>
             </div>
             : null}
-        </div>
+        </div>}</Fragment>
     )
 }
 
