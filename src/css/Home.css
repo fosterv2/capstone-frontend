@@ -25,6 +25,7 @@
 
 .post.card img {
     max-width: 80%;
+    max-height: 350px;
     margin: 10px;
 }
 
