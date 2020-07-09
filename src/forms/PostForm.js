@@ -5,6 +5,7 @@ const PostForm = props => {
     const [content, setContent] = useState(props.postInfo.content)
     const [img_url, setImage] = useState(props.postInfo.post_img)
     const [postGroups, setPostGroups] = useState(props.postInfo.groups.map(group => group.name))
+    const [showImg, setShow] = useState(props.postInfo.post_img !== "")
 
     const handleContentChange = event => {
         setContent(event.target.value)
@@ -75,13 +76,14 @@ const PostForm = props => {
                     value={content}
                     onChange={handleContentChange}
                 /><br />
-                <label>Image URL</label><br/>
+                {!showImg ? <button onClick={() => setShow(true)}>Add Picture</button>//<p onClick={() => setShow(true)}>Add Picture</p>
+                : <div><label>Image URL</label><br/>
                 <input
                     name="img_url"
                     placeholder="Enter an image url"
                     value={img_url}
                     onChange={handleImgChange}
-                /><br />
+                /></div>}
                 <p>Choose Group(s)</p>
                 <div className="checkboxes">{renderGroups()}</div>
                 <button type="submit">Submit</button>
