@@ -44,7 +44,9 @@ class Post extends Component {
     renderComments = () => {
         return this.state.comments.length === 0 ?
         <p>(This post has no comments)</p>
-        : this.state.comments.map(comment => <CommentCard key={comment.id} commentInfo={comment} currentUser={this.props.user} />)
+        : this.state.comments.map(comment => {
+            return <CommentCard key={comment.id} commentInfo={comment} currentUser={this.props.user} handleDelete={this.handleCommentDelete} />
+        })
     }
 
     toggleAddComment = () => {
@@ -87,6 +89,15 @@ class Post extends Component {
     handlePostDelete = post_id => {
         this.props.deletePost(post_id)
         this.props.history.push('/')
+    }
+
+    handleCommentDelete = comment_id => {
+        this.setState(prev => {
+            return {comments: prev.comments.filter(comment => comment.id !== comment_id)}
+        })
+        fetch(`${BASE_URL}comments/${comment_id}`, {
+            method: "DELETE"
+        })
     }
 
     render() {

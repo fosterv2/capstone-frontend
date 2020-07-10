@@ -1,7 +1,7 @@
 import React from 'react'
 
-const CommentCard = ({ commentInfo, currentUser }) => {
-    const { content, user, created_at } = commentInfo
+const CommentCard = ({ commentInfo, currentUser, handleDelete }) => {
+    const { id, content, user, created_at } = commentInfo
 
     const parseDate = date => {
         const dateArr = date.split("-")
@@ -19,8 +19,8 @@ const CommentCard = ({ commentInfo, currentUser }) => {
             </div>
             {user.id === currentUser.id ?
             <div className="post user">
-                <p onClick={() => console.log("Maybe an update")}>Update Post</p>
-                <p onClick={() => console.log("Need a delete")}>Delete Post</p>
+                <p onClick={() => console.log("Maybe an update")}>Update Comment</p>
+                <p onClick={() => handleDelete(id)}>Delete Comment</p>
             </div> : null}
         </div>
     )
