@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CommentCard = ({ commentInfo }) => {
+const CommentCard = ({ commentInfo, currentUser }) => {
     const { content, user, created_at } = commentInfo
 
     const parseDate = date => {
@@ -17,6 +17,11 @@ const CommentCard = ({ commentInfo }) => {
             <div className="content">
                 <p>{content}</p>
             </div>
+            {user.id === currentUser.id ?
+            <div className="post user">
+                <p onClick={() => console.log("Maybe an update")}>Update Post</p>
+                <p onClick={() => console.log("Need a delete")}>Delete Post</p>
+            </div> : null}
         </div>
     )
 }

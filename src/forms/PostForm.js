@@ -76,7 +76,7 @@ const PostForm = props => {
                     value={content}
                     onChange={handleContentChange}
                 /><br />
-                {!showImg ? <button onClick={() => setShow(true)}>Add Picture</button>//<p onClick={() => setShow(true)}>Add Picture</p>
+                {!showImg ? <button onClick={() => setShow(true)}>Add Picture</button>
                 : <div><label>Image URL</label><br/>
                 <input
                     name="img_url"

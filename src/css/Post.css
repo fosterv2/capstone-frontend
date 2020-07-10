@@ -9,11 +9,12 @@
 } */
 
 .comment.card {
-    width: 50%;
+    width: 45%;
     background-color: white;
     text-align: center;
-    border: 2px solid black;
+    border: 2px solid #007bff;
     color: black;
+    margin-top: 10px;
 }
 
 .toggle.form {
@@ -59,6 +60,7 @@
 
 .post.user {
     background-color: black;
+    color: white;
     display: flex;
     justify-content: space-around;
 }

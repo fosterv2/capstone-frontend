@@ -44,7 +44,7 @@ class Post extends Component {
     renderComments = () => {
         return this.state.comments.length === 0 ?
         <p>(This post has no comments)</p>
-        : this.state.comments.map(comment => <CommentCard key={comment.id} commentInfo={comment} />)
+        : this.state.comments.map(comment => <CommentCard key={comment.id} commentInfo={comment} currentUser={this.props.user} />)
     }
 
     toggleAddComment = () => {
