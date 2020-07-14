@@ -44,9 +44,12 @@ class Post extends Component {
     renderComments = () => {
         return this.state.comments.length === 0 ?
         <p>(This post has no comments)</p>
-        : this.state.comments.map(comment => {
-            return <CommentCard key={comment.id} commentInfo={comment} currentUser={this.props.user} handleDelete={this.handleCommentDelete} />
-        })
+        : this.state.comments.map(comment => <CommentCard key={comment.id}
+            commentInfo={comment}
+            currentUser={this.props.user}
+            handleUpdate={this.handleCommentUpdate}
+            handleDelete={this.handleCommentDelete}
+        />)
     }
 
     toggleAddComment = () => {
@@ -62,10 +65,7 @@ class Post extends Component {
     }
 
     handleSubmit = info => {
-        // event.preventDefault()
-        // this.setState({ addClicked: false })
         const body = {
-            // id: info.id,
             content: info.content,
             post_id: this.getPost().id,
             user_id: this.props.user.id
@@ -92,9 +92,19 @@ class Post extends Component {
         this.props.history.push('/')
     }
 
-    handleCommentUpdate = event => {
-        event.preventDefault()
-        fetch(`${BASE_URL}comments/${event}`)
+    handleCommentUpdate = info => {
+        fetch(`${BASE_URL}comments/${info.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            },
+            body: JSON.stringify({ content: info.content })
+        })
+        .then(resp => resp.json())
+        .then(returnComment => this.setState(prev => {
+            return { comments: prev.comments.map(comment => comment.id === info.id ? returnComment : comment) }
+        }))
     }
 
     handleCommentDelete = comment_id => {
@@ -136,7 +146,7 @@ class Post extends Component {
                 />
                 : null}
                 {this.state.addComment ? 
-                <CommentForm handleSubmit={this.handleSubmit} handleBack={this.toggleAddComment} />
+                <CommentForm handleSubmit={this.handleSubmit} handleBack={this.toggleAddComment} commentInfo={{content: ""}} />
                 : null }
                 {this.renderComments()}
             </div>

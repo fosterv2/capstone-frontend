@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-const CommentForm = ({ handleSubmit, handleBack }) => {
-    const [content, setContent] = useState("")
+const CommentForm = ({ handleSubmit, handleBack, commentInfo }) => {
+    const [content, setContent] = useState(commentInfo.content)
 
     const handleChange = event => {
         setContent(event.target.value)
@@ -10,7 +10,7 @@ const CommentForm = ({ handleSubmit, handleBack }) => {
     const handleFormSubmit = event => {
         event.preventDefault()
         const info = {
-            // id: commentInfo.id,
+            id: commentInfo.id,
             content: content
         }
         handleSubmit(info)
