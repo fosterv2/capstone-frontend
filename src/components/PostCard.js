@@ -17,13 +17,14 @@ const PostCard = props => {
     }
 
     const renderDiv = () => {
+        const word = likes.length === 1 ? "Like" : "Likes"
         let likePg
         if (user.id === props.user.id) {
-            likePg = <p>{likes.length} Likes <span style={{ color: "red" }}>♡</span></p>
+            likePg = <p>{likes.length} {word} <span style={{ color: "red" }}>♡</span></p>
         } else if (likes.find(like => like.user_id === props.user.id)) {
-            likePg = <p>{likes.length} Likes <span style={{ color: "red" }}>♥</span></p>
+            likePg = <p>{likes.length} {word} <span style={{ color: "red" }}>♥</span></p>
         } else {
-            likePg = <p>{likes.length} Likes <span onClick={() => handleClickLike(props.user.id, id)}>♡</span></p>
+            likePg = <p>{likes.length} {word} <span onClick={() => handleClickLike(props.user.id, id)}>♡</span></p>
         }
         const { loggedIn, onHandleClick, handleClickLike } = props
         if (loggedIn && onHandleClick) {
