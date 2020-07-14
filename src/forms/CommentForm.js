@@ -7,10 +7,20 @@ const CommentForm = ({ handleSubmit, handleBack }) => {
         setContent(event.target.value)
     }
 
+    const handleFormSubmit = event => {
+        event.preventDefault()
+        const info = {
+            // id: commentInfo.id,
+            content: content
+        }
+        handleSubmit(info)
+        handleBack()
+    }
+
     return (
         <div className="toggle form">
             <p className="back" onClick={handleBack}>X</p>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleFormSubmit}>
                 <label>Comment Content</label><br/>
                 <textarea
                     name="content"

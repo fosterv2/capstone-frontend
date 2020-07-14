@@ -61,11 +61,12 @@ class Post extends Component {
         })
     }
 
-    handleSubmit = event => {
-        event.preventDefault()
-        this.setState({ addClicked: false })
+    handleSubmit = info => {
+        // event.preventDefault()
+        // this.setState({ addClicked: false })
         const body = {
-            content: event.target.content.value,
+            // id: info.id,
+            content: info.content,
             post_id: this.getPost().id,
             user_id: this.props.user.id
         }
@@ -89,6 +90,11 @@ class Post extends Component {
     handlePostDelete = post_id => {
         this.props.deletePost(post_id)
         this.props.history.push('/')
+    }
+
+    handleCommentUpdate = event => {
+        event.preventDefault()
+        fetch(`${BASE_URL}comments/${event}`)
     }
 
     handleCommentDelete = comment_id => {
