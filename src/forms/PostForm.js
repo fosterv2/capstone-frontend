@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import AuthHOC from '../services/AuthHOC'
-import axios from 'axios'
+// import axios from 'axios'
 
 const PostForm = props => {
     const [content, setContent] = useState(props.postInfo.content)
@@ -35,14 +35,22 @@ const PostForm = props => {
     const submitPost = event => {
         event.preventDefault()
         const groupIds = props.groups.filter(group => postGroups.includes(group.name)).map(group => group.id)
-        const body = {
-            id: props.postInfo.id,
-            content: content,
-            post_img: img_url,
-            group_ids: groupIds,
-            user_id: props.user.id
-        }
-        props.handleSubmit(body)
+        const formData = new FormData()
+        formData.append("id", props.postInfo.id)
+        formData.append("content", content)
+        formData.append("post_img", img_url)
+        formData.append("group_ids", groupIds)
+        formData.append("user_id", props.user.id)
+        formData.append("image", file)
+        // const body = {
+        //     id: props.postInfo.id,
+        //     content: content,
+        //     post_img: img_url,
+        //     group_ids: groupIds,
+        //     user_id: props.user.id,
+        //     file: formData
+        // }
+        props.handleSubmit(formData)
         if (props.history){
             props.history.push('/')
         } else {
@@ -72,11 +80,11 @@ const PostForm = props => {
         })
     }
 
-    const handleFileSubmit = () => {
-        const formData = new FormData()
-        formData.append(file, file.name)
-        axios.post("")
-    }
+    // const handleFileSubmit = event => {
+    //     event.preventDefault()
+    //     const formData = new FormData()
+    //     formData.append("image", file, file.name)
+    // }
 
     return (
         <div className="toggle form">
@@ -91,7 +99,7 @@ const PostForm = props => {
                 /><br />
                 <div>
                     <input type="file" onChange={handleFileChange} />
-                    <button onClick={handleFileSubmit}>Upload</button>
+                    {/* <button onClick={handleFileSubmit}>Upload</button> */}
                 </div>
                 {!showImg ? <button onClick={() => setShow(true)}>Add Picture</button>
                 : <div><label>Image URL</label><br/>

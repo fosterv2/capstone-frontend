@@ -86,7 +86,7 @@ const mapDispatchToProps = dispatch => {
     fetchGroups: () => dispatch(fetchGroups()),
     setUser: data => dispatch(setUser(data)),
     clearUser: () => dispatch(clearUser()),
-    addPost: (body) => dispatch(addPost(body))
+    addPost: body => dispatch(addPost(body))
   }
 }
 

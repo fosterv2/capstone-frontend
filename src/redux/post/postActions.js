@@ -26,11 +26,12 @@ export function addPost(body) {
     return (dispatch) => {
         fetch(`${BASE_URL}posts`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json"
-            },
-            body: JSON.stringify(body)
+            // headers: {
+            //     "Content-Type": "application/json",
+            //     Accept: "application/json"
+            // },
+            // body: JSON.stringify(body)
+            body: body
         })
         .then(resp => resp.json())
         .then(post => dispatch({
