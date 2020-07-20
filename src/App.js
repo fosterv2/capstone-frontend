@@ -17,9 +17,6 @@ import Likes from './containers/Likes'
 import { connect } from "react-redux";
 import { fetchPosts, fetchGroups, setUser, clearUser, addPost, BASE_URL } from "./redux";
 
-// const BASE_URL = "https://cat-space-backend.herokuapp.com/"
-// const BASE_URL = "http://localhost:3000/"
-
 class App extends Component {
 
   componentDidMount() {
