@@ -5,10 +5,10 @@ import CommentForm from '../forms/CommentForm'
 import Profile from '../containers/Profile'
 import PostForm from '../forms/PostForm'
 import { connect } from "react-redux"
-import { updatePost, deletePost, likePost, addFollow, removeFollow } from "../redux"
+import { updatePost, deletePost, likePost, addFollow, removeFollow, BASE_URL } from "../redux"
 import '../css/Post.css'
 
-const BASE_URL = "https://cat-space-backend.herokuapp.com/"
+// const BASE_URL = "https://cat-space-backend.herokuapp.com/"
 // const BASE_URL = "http://localhost:3000/"
 
 class Post extends Component {

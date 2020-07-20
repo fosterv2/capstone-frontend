@@ -1,5 +1,6 @@
-const BASE_URL = "https://cat-space-backend.herokuapp.com/"
+// const BASE_URL = "https://cat-space-backend.herokuapp.com/"
 // const BASE_URL = "http://localhost:3000/"
+import { BASE_URL } from '../index'
 
 export function setUser(user) {
     return {

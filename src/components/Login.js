@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useFormInput } from '../services/FormHook'
 import { connect } from "react-redux";
-import { setUser } from "../redux";
+import { setUser, BASE_URL } from "../redux";
 
-const BASE_URL = "https://cat-space-backend.herokuapp.com/auth"
+// const BASE_URL = "https://cat-space-backend.herokuapp.com/auth"
 // const BASE_URL = "http://localhost:3000/auth"
 
 const Login = props => {
@@ -14,7 +14,7 @@ const Login = props => {
 
     const handleSubmit = event => {
         event.preventDefault()
-        fetch(BASE_URL, {
+        fetch(`${BASE_URL}auth`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

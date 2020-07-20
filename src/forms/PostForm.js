@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import AuthHOC from '../services/AuthHOC'
+import axios from 'axios'
 
 const PostForm = props => {
     const [content, setContent] = useState(props.postInfo.content)
     const [img_url, setImage] = useState(props.postInfo.post_img)
     const [postGroups, setPostGroups] = useState(props.postInfo.groups.map(group => group.name))
     const [showImg, setShow] = useState(props.postInfo.post_img !== "")
+    const [file, setFile] = useState(null)
 
     const handleContentChange = event => {
         setContent(event.target.value)
@@ -23,6 +25,11 @@ const PostForm = props => {
         } else {
             setPostGroups(postGroups.filter(group => group !== groupName))
         }
+    }
+
+    const handleFileChange = event => {
+        console.log(event.target.files[0])
+        setFile(event.target.files[0])
     }
 
     const submitPost = event => {
@@ -65,6 +72,12 @@ const PostForm = props => {
         })
     }
 
+    const handleFileSubmit = () => {
+        const formData = new FormData()
+        formData.append(file, file.name)
+        axios.post("")
+    }
+
     return (
         <div className="toggle form">
             {props.handleBack ? <p className="back" onClick={props.handleBack}>X</p> : <h1>Make a New Post</h1>}
@@ -76,6 +89,10 @@ const PostForm = props => {
                     value={content}
                     onChange={handleContentChange}
                 /><br />
+                <div>
+                    <input type="file" onChange={handleFileChange} />
+                    <button onClick={handleFileSubmit}>Upload</button>
+                </div>
                 {!showImg ? <button onClick={() => setShow(true)}>Add Picture</button>
                 : <div><label>Image URL</label><br/>
                 <input
