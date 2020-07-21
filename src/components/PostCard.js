@@ -63,7 +63,7 @@ const PostCard = props => {
     // }
 
     const listGroups = () => {
-        return groups.map(group => <span key={group.id}> @{group.name} </span>)
+        return groups.length === 0 ? <span> (None)</span> : groups.map(group => <span key={group.id}> @{group.name} </span>)
     }
 
     return (
