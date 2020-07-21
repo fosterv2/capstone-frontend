@@ -41,7 +41,6 @@ const PostForm = props => {
         formData.append("group_ids", groupIds)
         formData.append("user_id", props.user.id)
         formData.append("image", file)
-        debugger
         // const body = {
         //     id: props.postInfo.id,
         //     content: content,
