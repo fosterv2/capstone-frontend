@@ -26,11 +26,6 @@ export function addPost(body) {
     return (dispatch) => {
         fetch(`${BASE_URL}posts`, {
             method: "POST",
-            // headers: {
-            //     "Content-Type": "application/json",
-            //     Accept: "application/json"
-            // },
-            // body: JSON.stringify(body)
             body: body
         })
         .then(resp => resp.json())
@@ -45,11 +40,7 @@ export function updatePost(post) {
     return (dispatch) => {
         fetch(`${BASE_URL}posts/${post.get("id")}`, {
             method: "PATCH",
-            // headers: {
-            //     "Content-Type": "application/json",
-            //     Accept: "application/json"
-            // },
-            body: post //: JSON.stringify(post)
+            body: post
         })
         .then(resp => resp.json())
         .then(post => dispatch({

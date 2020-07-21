@@ -18,7 +18,6 @@ const PostForm = props => {
 
     const handleGroupsChange = event => {
         const groupName = event.target.value
-        // const checkedGroup = getUserGroups().find(group => group.name === groupName)
         if (!postGroups.includes(groupName)) {
             setPostGroups([...postGroups, groupName])
         } else {
@@ -41,14 +40,6 @@ const PostForm = props => {
         formData.append("group_ids", groupIds)
         formData.append("user_id", props.user.id)
         formData.append("image", file)
-        // const body = {
-        //     id: props.postInfo.id,
-        //     content: content,
-        //     post_img: img_url,
-        //     group_ids: groupIds,
-        //     user_id: props.user.id,
-        //     file: formData
-        // }
         props.handleSubmit(formData)
         if (props.history){
             props.history.push('/')
@@ -62,7 +53,6 @@ const PostForm = props => {
     }
 
     const renderGroups = () => {
-        // const groupNames = postGroups.map(group => group.name)
         return getUserGroups().map(group => {
             const htmlName = group.name.toLowerCase().split(" ").join("-")
             return <div key={group.id}>
@@ -71,7 +61,6 @@ const PostForm = props => {
                     id={htmlName}
                     type="checkbox"
                     value={group.name}
-                    // name="group"
                     checked={postGroups.includes(group.name)}
                     onChange={handleGroupsChange}
                 />
