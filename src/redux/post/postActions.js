@@ -43,13 +43,13 @@ export function addPost(body) {
 
 export function updatePost(post) {
     return (dispatch) => {
-        fetch(`${BASE_URL}posts/${post.id}`, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-        },
-        body: JSON.stringify(post)
+        fetch(`${BASE_URL}posts/${post.get("id")}`, {
+            method: "PATCH",
+            // headers: {
+            //     "Content-Type": "application/json",
+            //     Accept: "application/json"
+            // },
+            body: post //: JSON.stringify(post)
         })
         .then(resp => resp.json())
         .then(post => dispatch({
@@ -62,16 +62,11 @@ export function updatePost(post) {
 export function deletePost(post_id) {
     return (dispatch) => {
         fetch(`${BASE_URL}posts/${post_id}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-        },
-        body: JSON.stringify({
-            content: "This post has been deleted",
-            post_url: "",
-            deleted: true
-        })
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+            }
         })
         .then(resp => resp.json())
         .then(post => dispatch({

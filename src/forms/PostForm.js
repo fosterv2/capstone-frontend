@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import AuthHOC from '../services/AuthHOC'
-// import axios from 'axios'
 
 const PostForm = props => {
     const [content, setContent] = useState(props.postInfo.content)
@@ -28,7 +27,7 @@ const PostForm = props => {
     }
 
     const handleFileChange = event => {
-        console.log(event.target.files[0])
+        event.preventDefault()
         setFile(event.target.files[0])
     }
 
@@ -42,6 +41,7 @@ const PostForm = props => {
         formData.append("group_ids", groupIds)
         formData.append("user_id", props.user.id)
         formData.append("image", file)
+        debugger
         // const body = {
         //     id: props.postInfo.id,
         //     content: content,
@@ -80,12 +80,6 @@ const PostForm = props => {
         })
     }
 
-    // const handleFileSubmit = event => {
-    //     event.preventDefault()
-    //     const formData = new FormData()
-    //     formData.append("image", file, file.name)
-    // }
-
     return (
         <div className="toggle form">
             {props.handleBack ? <p className="back" onClick={props.handleBack}>X</p> : <h1>Make a New Post</h1>}
@@ -97,18 +91,18 @@ const PostForm = props => {
                     value={content}
                     onChange={handleContentChange}
                 /><br />
-                <div>
-                    <input type="file" onChange={handleFileChange} />
-                    {/* <button onClick={handleFileSubmit}>Upload</button> */}
-                </div>
                 {!showImg ? <button onClick={() => setShow(true)}>Add Picture</button>
-                : <div><label>Image URL</label><br/>
-                <input
-                    name="img_url"
-                    placeholder="Enter an image url"
-                    value={img_url}
-                    onChange={handleImgChange}
-                /></div>}
+                : <div>
+                    <label>Input Image</label><br/>
+                    <input type="file" onChange={handleFileChange} />
+                    <p>Or</p>
+                    <input
+                        name="img_url"
+                        placeholder="Enter an image url"
+                        value={img_url}
+                        onChange={handleImgChange}
+                    />
+                </div>}
                 <p>Choose Group(s)</p>
                 <div className="checkboxes">{renderGroups()}</div>
                 <button type="submit">Submit</button>
