@@ -11,22 +11,36 @@ const Signup = props => {
     const img_url = useFormInput("")
     const password = useFormInput("")
     const [error, setError] = useState(false)
+    const [file, setFile] = useState(null)
+
+    const handleFileChange = event => {
+        event.preventDefault()
+        setFile(event.target.files[0])
+    }
 
     const handleSubmit = event => {
         event.preventDefault()
+        setError(false)
+        const formData = new FormData()
+        formData.append("username", username.value)
+        formData.append("breed", breed.value)
+        formData.append("owner_name", owner_name.value)
+        formData.append("img_url", img_url.value)
+        formData.append("password", password.value)
+        formData.append("image", file)
         fetch(`${BASE_URL}users`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json"
-            },
-            body: JSON.stringify({
-                username: username.value,
-                breed: breed.value,
-                owner_name: owner_name.value,
-                img_url: img_url.value,
-                password: password.value
-            })
+            // headers: {
+            //     "Content-Type": "application/json",
+            //     Accept: "application/json"
+            // },
+            body: formData //JSON.stringify({
+            //     username: username.value,
+            //     breed: breed.value,
+            //     owner_name: owner_name.value,
+            //     img_url: img_url.value,
+            //     password: password.value
+            // })
         })
         .then(resp => resp.json())
         .then(response => {
@@ -45,6 +59,16 @@ const Signup = props => {
             <h1>Sign Up</h1>
             {error ? <h3>Wrong inputs</h3> : null}
             <form onSubmit={handleSubmit}>
+                <div className="ui field">
+                    <label>Profile Image</label><br/>
+                    <input type="file" onChange={handleFileChange} />
+                    <p style={{marginLeft: "7em", marginTop: "3px"}}>Or</p>
+                    <input
+                        name="img_url"
+                        placeholder="Enter an image url"
+                        {...img_url}
+                    />
+                </div>
                 <div className="ui field">
                     <label>Username</label><br/>
                     <input
@@ -67,14 +91,6 @@ const Signup = props => {
                         name="owner_name"
                         placeholder="Enter owner name"
                         {...owner_name}
-                    />
-                </div>
-                <div className="ui field">
-                    <label>Image URL</label><br/>
-                    <input
-                        name="img_url"
-                        placeholder="Enter an image url"
-                        {...img_url}
                     />
                 </div>
                 <div className="ui field">

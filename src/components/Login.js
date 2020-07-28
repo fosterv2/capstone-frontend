@@ -11,6 +11,7 @@ const Login = props => {
 
     const handleSubmit = event => {
         event.preventDefault()
+        setError(false)
         fetch(`${BASE_URL}auth`, {
             method: "POST",
             headers: {
