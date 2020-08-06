@@ -60,16 +60,6 @@ const Signup = props => {
             {error ? <h3>Wrong inputs</h3> : null}
             <form onSubmit={handleSubmit}>
                 <div className="ui field">
-                    <label>Profile Image</label><br/>
-                    <input type="file" onChange={handleFileChange} />
-                    <p style={{marginLeft: "7em", marginTop: "3px"}}>Or</p>
-                    <input
-                        name="img_url"
-                        placeholder="Enter an image url"
-                        {...img_url}
-                    />
-                </div>
-                <div className="ui field">
                     <label>Username</label><br/>
                     <input
                         name="username"
@@ -100,6 +90,16 @@ const Signup = props => {
                         type="password"
                         placeholder="Enter password"
                         {...password}
+                    />
+                </div>
+                <div className="ui field">
+                    <label>Profile Image (Optional)</label><br/>
+                    <input type="file" onChange={handleFileChange} />
+                    <p style={{marginLeft: "7em", marginTop: "3px"}}>Or</p>
+                    <input
+                        name="img_url"
+                        placeholder="Enter an image url"
+                        {...img_url}
                     />
                 </div>
                 <div className="form button">
