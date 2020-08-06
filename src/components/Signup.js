@@ -30,17 +30,7 @@ const Signup = props => {
         formData.append("image", file)
         fetch(`${BASE_URL}users`, {
             method: "POST",
-            // headers: {
-            //     "Content-Type": "application/json",
-            //     Accept: "application/json"
-            // },
-            body: formData //JSON.stringify({
-            //     username: username.value,
-            //     breed: breed.value,
-            //     owner_name: owner_name.value,
-            //     img_url: img_url.value,
-            //     password: password.value
-            // })
+            body: formData
         })
         .then(resp => resp.json())
         .then(response => {
