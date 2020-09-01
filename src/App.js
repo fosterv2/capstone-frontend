@@ -14,6 +14,7 @@ import AllGroups from './containers/AllGroups'
 import PostForm from './forms/PostForm'
 import Followee from './containers/Followee'
 import Likes from './containers/Likes'
+import ConversationsList from './containers/ConversationsList'
 import { connect } from "react-redux";
 import { fetchPosts, fetchGroups, setUser, clearUser, addPost, BASE_URL } from "./redux";
 
@@ -66,6 +67,7 @@ class App extends Component {
           <Route exact path="/groups/:group_id" render={props => <Group {...props} />} />
           <Route exact path="/users/:user_id" render={props => <Followee {...props} />} />
           <Route exact path="/liked_posts" render={props => <Likes {...props} />} />
+          <Route exact path="/conversations" component={ConversationsList} />
         </div>
       </Router>
     )

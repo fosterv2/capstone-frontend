@@ -8,7 +8,7 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk';
 import rootReducer from './redux/rootReducer'
 import { ActionCableProvider } from 'react-actioncable-provider'
-import AC_BASE_URL from './redux'
+import { AC_BASE_URL } from './redux'
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
