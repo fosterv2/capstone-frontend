@@ -57,7 +57,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         likePost: (user_id, post_id) => dispatch(likePost(user_id, post_id)),
-        // addFollow: (user_id, follow_id) => dispatch(addFollow(user_id, follow_id)),
         removeFollow: (user_id, follow_id) => dispatch(removeFollow(user_id, follow_id))
     }
 }

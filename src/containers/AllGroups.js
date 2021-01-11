@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import GroupForm from '../forms/GroupForm'
-// import { Link } from 'react-router-dom'
 import AuthHOC from '../services/AuthHOC'
 import { connect } from "react-redux";
 import { addGroup, joinGroup } from "../redux"

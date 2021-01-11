@@ -47,21 +47,6 @@ const PostCard = props => {
         }
     }
 
-    // const renderDiv = () => {
-    //     const { loggedIn, onHandleClick } = props
-    //     if (loggedIn && onHandleClick) {
-    //         return <div className="post buttons">
-    //             <p><span onClick={onHandleClick}>Add Comment</span></p>
-    //         </div>
-    //     } else if (onHandleClick) {
-    //         return null
-    //     } else {
-    //         return <div className="post buttons">
-    //             <p><Link to={`/posts/${id}`}>Comments</Link></p>
-    //         </div>
-    //     }
-    // }
-
     const listGroups = () => {
         return groups.length === 0 ? <span> (None)</span> : groups.map(group => <span key={group.id}> @{group.name} </span>)
     }

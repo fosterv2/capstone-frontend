@@ -12,8 +12,7 @@ class Post extends Component {
     state = {
         comments: [],
         addComment: false,
-        updatePost: false,
-        // updateComment: false
+        updatePost: false
     }
 
     componentDidMount() {
